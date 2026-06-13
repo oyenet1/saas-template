@@ -1,0 +1,49 @@
+{
+  "name": "lodgestatus-vue-copy",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "typecheck": "vue-tsc --noEmit"
+  },
+  "dependencies": {
+    "@internationalized/date": "^3.12.2",
+    "@nuxt/ui": "4.2.1",
+    "@pinia/colada": "^1.3.1",
+    "@tiptap/core": "^3.14.0",
+    "@tiptap/extension-highlight": "^3.14.0",
+    "@tiptap/extension-link": "^3.14.0",
+    "@tiptap/extension-text-align": "^3.14.0",
+    "@tiptap/extension-underline": "^3.14.0",
+    "@tiptap/vue-3": "^3.14.0",
+    "@unhead/vue": "^2.0.3",
+    "@unpic/vue": "^1.0.0",
+    "@vue-leaflet/vue-leaflet": "^0.10.1",
+    "@vueuse/sound": "^2.1.3",
+    "echarts": "^6.0.0",
+    "leaflet": "^1.9.4",
+    "ofetch": "^1.4.1",
+    "pinia": "^3.0.4",
+    "socket.io-client": "^4.8.3",
+    "unpic": "^4.2.2",
+    "vue": "^3.5.25",
+    "vue-echarts": "^8.0.0",
+    "vue-router": "^4.6.3",
+    "zod": "^4.1.13"
+  },
+  "devDependencies": {
+    "@iconify-json/heroicons": "^1.2.3",
+    "@iconify-json/lucide": "^1.2.80",
+    "@iconify-json/material-symbols": "^1.2.50",
+    "@iconify-json/ri": "^1.2.6",
+    "@iconify-json/simple-icons": "^1.2.63",
+    "@vitejs/plugin-vue": "^6.0.1",
+    "typescript": "^5.6.3",
+    "unplugin-vue-components": "^29.2.0",
+    "unplugin-vue-router": "^0.16.0",
+    "vite": "^7.1.3",
+    "vue-tsc": "^3.0.5"
+  }
+}

@@ -1,0 +1,340 @@
+@import "tailwindcss";
+@import "@nuxt/ui";
+
+:root {
+  --ui-primary: var(--ui-color-primary);
+}
+
+.dark {
+  --ui-primary: var(--ui-color-primary-200);
+}
+
+@theme static {
+  --color-primary: #4f79a8;
+  --color-big-stone-50: #f4f7fb;
+  --color-big-stone-100: #e9eef5;
+  --color-big-stone-200: #cedae9;
+  --color-big-stone-300: #a3bad6;
+  --color-big-stone-400: #7196bf;
+  --color-big-stone-500: #4f79a8;
+  --color-big-stone-600: #3d608c;
+  --color-big-stone-700: #324d72;
+  --color-big-stone-800: #2c4260;
+  --color-big-stone-900: #293951;
+  --color-big-stone-950: #1e293b;
+
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+button,
+a {
+  cursor: pointer;
+}
+
+/* Show the "not-allowed" cursor on any disabled control so users
+ * get immediate visual feedback that the element is unclickable. */
+button:disabled,
+a[aria-disabled="true"],
+a:disabled,
+[role="button"][aria-disabled="true"],
+[role="button"]:disabled,
+input:disabled,
+select:disabled,
+textarea:disabled,
+[disabled]:not(button):not(a):not(input):not(select):not(textarea) {
+  cursor: not-allowed !important;
+}
+
+/* Hide the password reveal button in Edge */
+::-ms-reveal {
+  display: none;
+}
+
+/* ──────────────────────────────────────────────────────────────────
+   Global animation utilities — smooth, GPU-accelerated, no lag
+   ────────────────────────────────────────────────────────────────── */
+
+:root {
+  --ease-out-quart: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+  --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
+  --duration-fast: 150ms;
+  --duration-base: 250ms;
+  --duration-slow: 400ms;
+}
+
+/* Smooth scrolling for the whole app */
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Respect user motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Global hover lift for interactive cards */
+.hover-lift {
+  transition: transform var(--duration-base) var(--ease-out-quart),
+              box-shadow var(--duration-base) var(--ease-out-quart);
+  will-change: transform;
+}
+.hover-lift:hover {
+  transform: translateY(-2px);
+}
+
+/* Press feedback */
+.press {
+  transition: transform var(--duration-fast) var(--ease-out-quart);
+}
+.press:active {
+  transform: scale(0.97);
+}
+
+/* Fade-in on mount (used by components not using v-animate) */
+@keyframes app-fade-in {
+  from { opacity: 0; transform: translate3d(0, 8px, 0); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+.animate-fade-in {
+  animation: app-fade-in var(--duration-slow) var(--ease-out-quart) both;
+}
+
+@keyframes app-fade-in-soft {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.animate-fade-in-soft {
+  animation: app-fade-in-soft var(--duration-slow) var(--ease-out-quart) both;
+}
+
+@keyframes app-scale-in {
+  from { opacity: 0; transform: scale3d(0.95, 0.95, 1); }
+  to   { opacity: 1; transform: scale3d(1, 1, 1); }
+}
+.animate-scale-in {
+  animation: app-scale-in var(--duration-base) var(--ease-out-quart) both;
+}
+
+@keyframes app-slide-in-right {
+  from { opacity: 0; transform: translate3d(16px, 0, 0); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+.animate-slide-in-right {
+  animation: app-slide-in-right var(--duration-slow) var(--ease-out-quart) both;
+}
+
+@keyframes app-slide-in-left {
+  from { opacity: 0; transform: translate3d(-16px, 0, 0); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+.animate-slide-in-left {
+  animation: app-slide-in-left var(--duration-slow) var(--ease-out-quart) both;
+}
+
+/* Stagger helpers — apply to children with --stagger-index */
+.stagger > * {
+  animation: app-fade-in var(--duration-slow) var(--ease-out-quart) both;
+  animation-delay: calc(var(--stagger-index, 0) * 60ms);
+}
+.stagger > *:nth-child(1)  { --stagger-index: 0; }
+.stagger > *:nth-child(2)  { --stagger-index: 1; }
+.stagger > *:nth-child(3)  { --stagger-index: 2; }
+.stagger > *:nth-child(4)  { --stagger-index: 3; }
+.stagger > *:nth-child(5)  { --stagger-index: 4; }
+.stagger > *:nth-child(6)  { --stagger-index: 5; }
+.stagger > *:nth-child(7)  { --stagger-index: 6; }
+.stagger > *:nth-child(8)  { --stagger-index: 7; }
+.stagger > *:nth-child(9)  { --stagger-index: 8; }
+.stagger > *:nth-child(10) { --stagger-index: 9; }
+.stagger > *:nth-child(n+11) { --stagger-index: 10; }
+
+/* ──────────────────────────────────────────────────────────────────
+   Nuxt page transitions
+   ────────────────────────────────────────────────────────────────── */
+
+/* Page enter/leave */
+.page-enter-active,
+.page-leave-active {
+  transition: opacity var(--duration-base) var(--ease-out-quart),
+              transform var(--duration-base) var(--ease-out-quart);
+}
+
+.page-enter-from {
+  opacity: 0;
+  transform: translate3d(0, 8px, 0);
+}
+
+.page-leave-to {
+  opacity: 0;
+  transform: translate3d(0, -4px, 0);
+}
+
+/* Layout enter/leave */
+.layout-enter-active,
+.layout-leave-active {
+  transition: opacity var(--duration-slow) var(--ease-out-quart);
+}
+
+.layout-enter-from,
+.layout-leave-to {
+  opacity: 0;
+}
+
+/* List transitions (TransitionGroup) */
+.list-enter-active,
+.list-leave-active {
+  transition: opacity var(--duration-base) var(--ease-out-quart),
+              transform var(--duration-base) var(--ease-out-quart);
+}
+.list-enter-from {
+  opacity: 0;
+  transform: translate3d(0, 8px, 0);
+}
+.list-leave-to {
+  opacity: 0;
+  transform: translate3d(0, -8px, 0);
+}
+.list-move {
+  transition: transform var(--duration-slow) var(--ease-out-quart);
+}
+
+/* Dropdown / popover content from nuxt/ui */
+[data-slot="content"] {
+  animation: app-scale-in var(--duration-base) var(--ease-out-quart) both;
+  transform-origin: var(--reka-popper-content-transform-origin, top);
+}
+
+/* Skeleton shimmer */
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.04) 0%,
+    rgba(0, 0, 0, 0.08) 50%,
+    rgba(0, 0, 0, 0.04) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.6s linear infinite;
+  border-radius: 0.375rem;
+}
+.dark .skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.04) 0%,
+    rgba(255, 255, 255, 0.08) 50%,
+    rgba(255, 255, 255, 0.04) 100%
+  );
+  background-size: 200% 100%;
+}
+
+/* ──────────────────────────────────────────────────────────────────
+   Dashboard sidebar / panel smooth collapse
+   ────────────────────────────────────────────────────────────────── */
+
+/* Sidebar root width transition (nuxt ui already uses --width var) */
+[data-slot="sidebar"] {
+  transition: width 500ms cubic-bezier(0.16, 1, 0.3, 1),
+              min-width 500ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+[data-slot="sidebar"][data-state="collapsed"] {
+  transition: width 1000ms cubic-bezier(0.16, 1, 0.3, 1),
+              min-width 1000ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.udashboard-sidebar {
+  transition: width 500ms cubic-bezier(0.16, 1, 0.3, 1),
+              min-width 500ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.udashboard-sidebar[data-state="collapsed"] {
+  transition: width 1000ms cubic-bezier(0.16, 1, 0.3, 1),
+              min-width 1000ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Main panel root width transition */
+[data-slot="panel"] {
+  transition: width 500ms cubic-bezier(0.16, 1, 0.3, 1),
+              flex 500ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+[data-slot="panel"][data-state="collapsed"] {
+  transition: width 1000ms cubic-bezier(0.16, 1, 0.3, 1),
+              flex 1000ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Collapse button icon rotates slightly when toggled */
+[data-slot="collapse"] {
+  transition: transform 250ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+[data-slot="collapse"]:active {
+  transform: scale(0.94);
+}
+
+/* Tooltip that pops up when sidebar collapsed */
+[data-slot="tooltip-content"] {
+  animation: app-scale-in var(--duration-base) var(--ease-out-quart) both;
+  transform-origin: var(--reka-tooltip-content-transform-origin, left center);
+}
+
+/* Notification badge pop-in */
+[data-slot="badge"] {
+  animation: app-scale-in 300ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Accordion content used by nav (when children collapse/expand) */
+[data-slot="content"] {
+  overflow: hidden;
+  transition: height 250ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Smooth dropdown / popover / slideover overlays */
+[data-slot="overlay"] {
+  animation: app-fade-in-soft var(--duration-base) var(--ease-out-quart) both;
+}
+
+/* Toast / notifications slide-in */
+[data-slot="toast"] {
+  animation: app-slide-in-right var(--duration-slow) var(--ease-out-quart) both;
+}
+
+/* Sidebar mobile slideover */
+@media (max-width: 1023px) {
+  [data-slot="content"].lg\\:hidden {
+    animation: app-slide-in-left var(--duration-slow) var(--ease-out-quart) both;
+  }
+}
+
+/* Nav link press feedback */
+[data-slot="link"] {
+  transition: color var(--duration-base) var(--ease-out-quart),
+              background-color var(--duration-base) var(--ease-out-quart);
+}
+
+[data-slot="link"]:active {
+  transform: scale(0.98);
+}
+
+/* Buttons get a subtle press */
+button:not(:disabled):active,
+[role="button"]:not([aria-disabled="true"]):active {
+  transform: scale(0.97);
+  transition: transform 100ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Card hover lift */
+[data-slot="card"] {
+  transition: transform var(--duration-base) var(--ease-out-quart),
+              box-shadow var(--duration-base) var(--ease-out-quart),
+              border-color var(--duration-base) var(--ease-out-quart);
+}
