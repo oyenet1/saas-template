@@ -1,0 +1,112 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const team = [
+  {
+    name: 'Alexander Voss',
+    role: 'Founder & CEO',
+    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80',
+  },
+  {
+    name: 'Isabella Chen',
+    role: 'Head of Luxury Sales',
+    image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&q=80',
+  },
+  {
+    name: 'Marcus Rivera',
+    role: 'Senior Property Advisor',
+    image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&q=80',
+  },
+  {
+    name: 'Sophie Laurent',
+    role: 'International Client Relations',
+    image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&q=80',
+  },
+];
+---
+
+<Layout
+  title="About Us — LuxEstate"
+  description="Learn about LuxEstate — a premier real estate agency with over a decade of experience connecting discerning clients with exceptional properties worldwide."
+>
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="max-w-3xl">
+      <span class="badge-soft mb-4">
+        About LuxEstate
+      </span>
+      <h1 class="text-4xl lg:text-5xl font-semibold">A Tradition of Excellence in Real Estate</h1>
+      <p class="mt-6 text-lg text-muted leading-relaxed">
+        Founded in 2010, LuxEstate has grown from a boutique agency in Beverly Hills to a global network spanning
+        24 cities across 12 countries. We believe buying or selling a property is one of life's most significant
+        decisions — and we treat it with the care, discretion, and expertise it deserves.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mt-16">
+      <div>
+        <h2 class="text-2xl font-bold mb-4">Our Philosophy</h2>
+        <div class="space-y-4 text-muted leading-relaxed">
+          <p>
+            At LuxEstate, we don't just sell properties — we craft experiences. Every listing in our portfolio
+            is personally vetted by our senior advisors. We represent fewer properties than most agencies
+            because we believe in quality over quantity.
+          </p>
+          <p>
+            Our clients include Fortune 500 executives, international investors, and discerning individuals
+            seeking homes that match their aspirations. We provide white-glove service from the first
+            conversation through closing and beyond.
+          </p>
+          <p>
+            With a dedicated research team tracking market trends across 24 cities, we provide our clients
+            with data-driven insights that inform smarter decisions. Our average time-to-close is 30% faster
+            than the industry standard.
+          </p>
+        </div>
+      </div>
+
+      <div class="relative rounded-2xl overflow-hidden min-h-[350px]">
+        <img
+          src="https://images.unsplash.com/photo-1600585154084-4e5fe7c39198?w=800&q=80"
+          alt="LuxEstate office"
+          class="absolute inset-0 w-full h-full object-cover"
+          loading="lazy"
+        />
+      </div>
+    </div>
+
+    <div class="mt-20">
+      <h2 class="text-2xl font-bold text-center mb-10">Meet Our Leadership</h2>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+        {team.map((member) => (
+          <div class="text-center">
+            <div class="relative aspect-square rounded-xl overflow-hidden mb-4">
+              <img
+                src={member.image}
+                alt={member.name}
+                class="w-full h-full object-cover"
+                loading="lazy"
+              />
+            </div>
+            <h3 class="font-semibold text-sm">{member.name}</h3>
+            <p class="text-xs text-muted mt-0.5">{member.role}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <div class="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="p-6 rounded-xl surface-card text-center">
+        <p class="text-4xl font-bold text-primary">150+</p>
+        <p class="text-sm text-muted mt-2">Properties sold annually in the luxury segment</p>
+      </div>
+      <div class="p-6 rounded-xl surface-card text-center">
+        <p class="text-4xl font-bold text-primary">$2.4B</p>
+        <p class="text-sm text-muted mt-2">Total transaction value across our portfolio</p>
+      </div>
+      <div class="p-6 rounded-xl surface-card text-center">
+        <p class="text-4xl font-bold text-primary">98%</p>
+        <p class="text-sm text-muted mt-2">Client satisfaction rate over the past 5 years</p>
+      </div>
+    </div>
+  </section>
+</Layout>

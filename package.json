@@ -12,6 +12,17 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^6.4.7"
+    "@astrojs/vue": "^6.0.1",
+    "@iconify-json/lucide": "^1.2.113",
+    "@nuxt/ui": "^4.8.2",
+    "@tailwindcss/vite": "^4.3.1",
+    "@vueuse/core": "^14.3.0",
+    "astro": "^6.4.7",
+    "reka-ui": "^2.9.10",
+    "tailwindcss": "^4.3.1",
+    "tinyglobby": "0.2.12",
+    "vue": "^3.5.38",
+    "vue-i18n": "11",
+    "vue-router": "4"
   }
 }

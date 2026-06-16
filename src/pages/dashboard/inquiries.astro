@@ -1,0 +1,57 @@
+---
+import DashboardLayout from '../../layouts/DashboardLayout.astro';
+import { properties, formatPrice } from '../../data/properties';
+
+const inquiries = [
+  { id: 'INQ-001', property: properties[0], date: '2026-06-14', status: 'pending', message: 'I am interested in scheduling a private viewing of this property. Please let me know available times next week.' },
+  { id: 'INQ-002', property: properties[1], date: '2026-06-10', status: 'replied', message: 'Could you provide more information about the HOA fees and property tax estimates?' },
+  { id: 'INQ-003', property: properties[4], date: '2026-06-05', status: 'closed', message: 'I would like to make an offer. Please contact me at your earliest convenience.' },
+  { id: 'INQ-004', property: properties[6], date: '2026-05-28', status: 'replied', message: 'Is this property still available? I am relocating to Tokyo next month.' },
+];
+---
+
+<DashboardLayout title="My Inquiries — LuxEstate" description="Track your property inquiries">
+  <div class="mb-8">
+    <h1 class="text-2xl font-bold">My Inquiries</h1>
+    <p class="text-muted text-sm mt-1">{inquiries.length} total inquiries</p>
+  </div>
+
+  <div class="space-y-4">
+    {inquiries.map((inq) => {
+      const statusColors = {
+        pending: 'bg-warning/10 text-warning border-warning/20',
+        replied: 'bg-primary/10 text-primary border-primary/20',
+        closed: 'bg-muted text-muted border-default',
+      };
+      return (
+        <div class="p-5 rounded-xl border border-default bg-elevated">
+          <div class="flex items-start justify-between gap-4 mb-3">
+            <div>
+              <span class="text-xs text-muted font-mono">{inq.id}</span>
+              <h3 class="font-medium mt-0.5">
+                <a href={`/properties/${inq.property.slug}`} class="hover:text-primary transition-colors">{inq.property.title}</a>
+              </h3>
+              <p class="text-xs text-muted">{inq.date}</p>
+            </div>
+            <span class={`px-2.5 py-1 rounded-full text-xs font-medium border capitalize ${statusColors[inq.status]}`}>
+              {inq.status}
+            </span>
+          </div>
+          <p class="text-sm text-muted leading-relaxed">&ldquo;{inq.message}&rdquo;</p>
+          {inq.status === 'pending' && (
+            <div class="mt-4 flex gap-2">
+              <button type="button" class="px-3 py-1.5 rounded-lg bg-primary text-inverted text-xs font-medium hover:bg-primary/90 transition-colors">View Response</button>
+              <button type="button" class="px-3 py-1.5 rounded-lg border border-default text-xs font-medium hover:bg-elevated transition-colors">Cancel</button>
+            </div>
+          )}
+          {inq.status === 'replied' && (
+            <div class="mt-3 p-3 rounded-lg bg-primary/5 border border-primary/10">
+              <p class="text-xs font-medium text-primary mb-1">Agent replied</p>
+              <p class="text-sm text-muted">Thank you for your interest! We would be happy to schedule a viewing. Our agent will contact you within 24 hours.</p>
+            </div>
+          )}
+        </div>
+      );
+    })}
+  </div>
+</DashboardLayout>

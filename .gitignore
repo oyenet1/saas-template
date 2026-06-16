@@ -4,6 +4,10 @@ dist/
 # generated types
 .astro/
 
+# nuxt-ui auto-generated type declarations
+auto-imports.d.ts
+components.d.ts
+
 # dependencies
 node_modules/
 

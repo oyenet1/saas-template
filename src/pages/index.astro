@@ -1,11 +1,151 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
+import PropertyCard from '../components/PropertyCard.vue';
+import { getFeaturedProperties } from '../data/properties';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const featured = getFeaturedProperties();
+const stats = [
+  { value: '150+', label: 'Properties Sold' },
+  { value: '12', label: 'Years Experience' },
+  { value: '98%', label: 'Client Satisfaction' },
+  { value: '24', label: 'Global Cities' },
+];
 ---
 
-<Layout>
-	<Welcome />
+<Layout
+  title="LuxEstate — Exceptional Properties Worldwide"
+  description="Discover extraordinary real estate. Curated luxury properties in the world's most desirable locations."
+>
+  <section class="relative min-h-[640px] flex items-center overflow-hidden bg-white">
+    <div class="absolute inset-0 z-0">
+      <img
+        src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1920&q=80"
+        alt="Luxury real estate"
+        class="w-full h-full object-cover scale-105"
+        loading="eager"
+      />
+      <div class="absolute inset-0 bg-gradient-to-r from-white via-white/95 to-white/40 dark:from-[var(--surface-page)] dark:via-[var(--surface-page)]/95 dark:to-[var(--surface-page)]/40 z-10" />
+      <div class="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent dark:from-[var(--surface-page)] z-10" />
+    </div>
+
+    <div class="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 w-full">
+      <div class="max-w-2xl">
+        <span class="badge-soft mb-6">
+          Premium Property Management
+        </span>
+        <h1 class="text-4xl sm:text-5xl lg:text-[3.5rem] font-semibold leading-[1.1] text-default">
+          Find Your Perfect<br />
+          <span class="text-primary italic">Place to Call Home</span>
+        </h1>
+        <p class="mt-6 text-lg text-muted leading-relaxed max-w-lg">
+          Explore a curated collection of exceptional properties in the world's most sought-after locations — from beachfront villas to urban penthouses.
+        </p>
+        <div class="mt-10 flex flex-wrap gap-4">
+          <a href="/properties" class="btn-primary">
+            Explore Properties
+            <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </a>
+          <a href="/about" class="btn-outline">
+            About Us
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-12 relative z-30">
+    <div class="surface-card p-6 lg:p-8 shadow-[var(--shadow-card)]">
+      <p class="text-xs font-semibold uppercase tracking-wider text-muted mb-4">Search Listings</p>
+      <form action="/properties" method="GET" class="flex flex-col lg:flex-row gap-3">
+        <div class="flex-1">
+          <input
+            type="text"
+            name="search"
+            placeholder="Search by city, location, or keyword..."
+            class="input-field"
+          />
+        </div>
+        <select name="type" class="input-field lg:max-w-[180px]">
+          <option value="">All Types</option>
+          <option value="villa">Villa</option>
+          <option value="house">House</option>
+          <option value="apartment">Apartment</option>
+          <option value="penthouse">Penthouse</option>
+          <option value="land">Land</option>
+        </select>
+        <select name="status" class="input-field lg:max-w-[160px]">
+          <option value="">Buy & Rent</option>
+          <option value="sale">For Sale</option>
+          <option value="rent">For Rent</option>
+        </select>
+        <button type="submit" class="btn-primary shrink-0 justify-center">
+          Search
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-20">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 lg:gap-6">
+      {stats.map((stat) => (
+        <div class="surface-card surface-card-hover text-center p-6 lg:p-8">
+          <p class="text-3xl lg:text-4xl font-semibold text-primary font-[family-name:var(--font-display)]">{stat.value}</p>
+          <p class="text-sm text-muted mt-2">{stat.label}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-24">
+    <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
+      <div>
+        <span class="badge-soft mb-3">Curated Selection</span>
+        <h2 class="text-3xl lg:text-4xl font-semibold">Featured Properties</h2>
+        <p class="text-muted mt-3 max-w-lg">Hand-picked exceptional listings from our portfolio, vetted by senior advisors.</p>
+      </div>
+      <a href="/properties" class="inline-flex items-center gap-1 text-sm font-semibold text-primary hover:gap-2 transition-all shrink-0">
+        View All
+        <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </a>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      {featured.map((property) => (
+        <PropertyCard client:load property={property} />
+      ))}
+    </div>
+  </section>
+
+  <section class="section-muted mt-24 py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="surface-card overflow-hidden shadow-[var(--shadow-card)]">
+        <div class="grid md:grid-cols-2">
+          <div class="p-10 lg:p-16 flex flex-col justify-center">
+            <span class="badge-soft mb-4 w-fit">Personal Service</span>
+            <h2 class="text-3xl lg:text-4xl font-semibold">Ready to Find Your Dream Home?</h2>
+            <p class="mt-5 text-muted leading-relaxed">
+              Our team of experienced agents is ready to guide you through every step of your real estate journey — whether you're buying, selling, or investing.
+            </p>
+            <div class="mt-8 flex flex-wrap gap-4">
+              <a href="/contact" class="btn-primary">
+                Contact an Agent
+              </a>
+              <a href="/properties" class="btn-outline">
+                Browse Listings
+              </a>
+            </div>
+          </div>
+          <div class="relative min-h-[320px] lg:min-h-full">
+            <img
+              src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80"
+              alt="Luxury interior"
+              class="absolute inset-0 w-full h-full object-cover"
+              loading="lazy"
+            />
+            <div class="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent dark:from-[var(--surface-page)]/20" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 </Layout>

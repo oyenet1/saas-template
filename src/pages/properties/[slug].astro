@@ -1,0 +1,194 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getPropertyBySlug, formatPrice, getFeaturedProperties } from '../../data/properties';
+import PropertyCard from '../../components/PropertyCard.vue';
+import ImageGallery from '../../components/ImageGallery.vue';
+
+export const prerender = false;
+
+export async function getStaticPaths() {
+  const { properties } = await import('../../data/properties');
+  return properties.map((p) => ({ params: { slug: p.slug } }));
+}
+
+const { slug } = Astro.params;
+const property = getPropertyBySlug(slug);
+
+if (!property) {
+  return Astro.redirect('/properties');
+}
+
+const similar = getFeaturedProperties().filter((p) => p.slug !== slug).slice(0, 3);
+---
+
+<Layout
+  title={`${property.title} — LuxEstate`}
+  description={`${property.title} — ${property.bedrooms} bed, ${property.bathrooms} bath, ${property.area.toLocaleString()} sqft in ${property.location}. ${formatPrice(property.price, property.status)}.`}
+>
+  <article class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <nav class="flex items-center gap-2 text-sm text-muted mb-6">
+      <a href="/" class="hover:text-default transition-colors">Home</a>
+      <span>/</span>
+      <a href="/properties" class="hover:text-default transition-colors">Properties</a>
+      <span>/</span>
+      <span class="text-default">{property.title}</span>
+    </nav>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div class="lg:col-span-2 space-y-8">
+        <ImageGallery client:load images={property.images} title={property.title} />
+
+        <div>
+          <div class="flex flex-wrap items-start justify-between gap-4 mb-4">
+            <div>
+              <h1 class="text-3xl font-bold tracking-tight">{property.title}</h1>
+              <p class="flex items-center gap-1.5 text-muted mt-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                {property.location}
+              </p>
+            </div>
+            <div class="flex gap-2">
+              <span class="px-3 py-1.5 rounded-lg text-xs font-medium bg-primary/10 text-primary border border-primary/20">
+                {property.status === 'sale' ? 'For Sale' : 'For Rent'}
+              </span>
+              {property.featured && (
+                <span class="px-3 py-1.5 rounded-lg text-xs font-medium bg-primary text-inverted">Featured</span>
+              )}
+            </div>
+          </div>
+
+          <p class="text-3xl font-bold text-primary mb-6">
+            {formatPrice(property.price, property.status)}
+          </p>
+
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 p-5 rounded-xl border border-default bg-elevated/50">
+            <div class="text-center">
+              <p class="text-2xl font-bold">{property.bedrooms}</p>
+              <p class="text-xs text-muted mt-1">Bedrooms</p>
+            </div>
+            <div class="text-center">
+              <p class="text-2xl font-bold">{property.bathrooms}</p>
+              <p class="text-xs text-muted mt-1">Bathrooms</p>
+            </div>
+            <div class="text-center">
+              <p class="text-2xl font-bold">{property.area.toLocaleString()}</p>
+              <p class="text-xs text-muted mt-1">Sq Ft</p>
+            </div>
+            <div class="text-center">
+              <p class="text-2xl font-bold capitalize">{property.type}</p>
+              <p class="text-xs text-muted mt-1">Type</p>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <h2 class="text-xl font-semibold mb-4">Description</h2>
+          <p class="text-muted leading-relaxed whitespace-pre-line">{property.description}</p>
+        </div>
+
+        {property.video && (
+          <div>
+            <h2 class="text-xl font-semibold mb-4">Video Tour</h2>
+            <div class="aspect-video rounded-xl overflow-hidden border border-default">
+              <iframe
+                src={property.video}
+                title={`${property.title} video tour`}
+                class="w-full h-full"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+              />
+            </div>
+          </div>
+        )}
+
+        <div>
+          <h2 class="text-xl font-semibold mb-4">Features & Amenities</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {property.features.map((feature) => (
+              <div class="flex items-center gap-2 p-3 rounded-lg border border-default">
+                <svg class="w-4 h-4 text-primary shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <span class="text-sm">{feature}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <aside class="lg:col-span-1 space-y-6">
+        <div class="p-6 rounded-xl border border-default bg-elevated/50 sticky top-24">
+          <h3 class="font-semibold mb-4">Interested in this property?</h3>
+          <p class="text-sm text-muted mb-4">
+            Contact our team to schedule a private viewing or request more information.
+          </p>
+          <form class="space-y-3">
+            <input
+              type="text"
+              placeholder="Your Name"
+              required
+              class="w-full px-3 py-2.5 rounded-lg border border-default bg-default text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
+            />
+            <input
+              type="email"
+              placeholder="Your Email"
+              required
+              class="w-full px-3 py-2.5 rounded-lg border border-default bg-default text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
+            />
+            <input
+              type="tel"
+              placeholder="Phone Number"
+              class="w-full px-3 py-2.5 rounded-lg border border-default bg-default text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
+            />
+            <textarea
+              placeholder={`I'm interested in ${property.title}...`}
+              rows={3}
+              class="w-full px-3 py-2.5 rounded-lg border border-default bg-default text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 resize-none"
+            />
+            <button
+              type="submit"
+              class="w-full px-4 py-2.5 rounded-lg bg-primary text-inverted font-medium text-sm hover:bg-primary/90 transition-colors"
+            >
+              Send Inquiry
+            </button>
+          </form>
+        </div>
+
+        <div class="p-5 rounded-xl border border-default bg-elevated/50">
+          <h4 class="text-sm font-semibold mb-2">Property Details</h4>
+          <dl class="space-y-2 text-sm">
+            <div class="flex justify-between">
+              <dt class="text-muted">Property ID</dt>
+              <dd class="font-mono text-xs">LX-{property.slug.substring(0, 8).toUpperCase()}</dd>
+            </div>
+            <div class="flex justify-between">
+              <dt class="text-muted">Type</dt>
+              <dd class="capitalize">{property.type}</dd>
+            </div>
+            <div class="flex justify-between">
+              <dt class="text-muted">Status</dt>
+              <dd>{property.status === 'sale' ? 'For Sale' : 'For Rent'}</dd>
+            </div>
+            <div class="flex justify-between">
+              <dt class="text-muted">Area</dt>
+              <dd>{property.area.toLocaleString()} sq ft</dd>
+            </div>
+            <div class="flex justify-between">
+              <dt class="text-muted">City</dt>
+              <dd>{property.city}</dd>
+            </div>
+          </dl>
+        </div>
+      </aside>
+    </div>
+
+    {similar.length > 0 && (
+      <section class="mt-16 pt-12 border-t border-default">
+        <h2 class="text-2xl font-bold mb-6">Similar Properties</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {similar.map((p) => (
+            <PropertyCard client:load property={p} />
+          ))}
+        </div>
+      </section>
+    )}
+  </article>
+</Layout>
