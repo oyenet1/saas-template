@@ -1,5 +1,6 @@
 ---
 import DashboardLayout from '../../layouts/DashboardLayout.astro';
+import ProfileForm from '../../components/ProfileForm.vue';
 ---
 
 <DashboardLayout title="Profile — LuxEstate" description="Manage your LuxEstate profile">
@@ -9,76 +10,9 @@ import DashboardLayout from '../../layouts/DashboardLayout.astro';
   </div>
 
   <div class="space-y-6">
-    <div class="p-6 rounded-xl border border-default bg-elevated">
-      <h2 class="font-semibold mb-5">Personal Information</h2>
-      <form class="space-y-4 max-w-xl">
-        <div class="flex items-center gap-6 mb-6">
-          <div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center text-2xl font-bold text-primary">AV</div>
-          <div>
-            <p class="font-medium">Alexander Voss</p>
-            <p class="text-xs text-muted">Member since March 2025</p>
-            <button type="button" class="text-xs text-primary hover:underline mt-1">Change photo</button>
-          </div>
-        </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
-            <label for="fn" class="block text-sm font-medium mb-1.5">First Name</label>
-            <input id="fn" type="text" value="Alexander" class="input-field" />
-          </div>
-          <div>
-            <label for="ln" class="block text-sm font-medium mb-1.5">Last Name</label>
-            <input id="ln" type="text" value="Voss" class="input-field" />
-          </div>
-        </div>
-        <div>
-          <label for="email" class="block text-sm font-medium mb-1.5">Email</label>
-          <input id="email" type="email" value="alex@example.com" class="input-field" />
-        </div>
-        <div>
-          <label for="phone" class="block text-sm font-medium mb-1.5">Phone</label>
-          <input id="phone" type="tel" value="+1 (310) 555-0100" class="input-field" />
-        </div>
-        <div class="flex gap-3 pt-2">
-          <button type="submit" class="px-4 py-2.5 rounded-lg bg-primary text-inverted font-medium text-sm hover:bg-primary/90 transition-colors">Save Changes</button>
-          <button type="reset" class="px-4 py-2.5 rounded-lg border border-default text-sm font-medium hover:bg-elevated transition-colors">Cancel</button>
-        </div>
-      </form>
-    </div>
+    <ProfileForm client:load />
 
-    <div class="p-6 rounded-xl border border-default bg-elevated">
-      <h2 class="font-semibold mb-5">Preferences</h2>
-      <div class="space-y-4 max-w-xl">
-        <div class="flex items-center justify-between">
-          <div>
-            <p class="text-sm font-medium">Email Notifications</p>
-            <p class="text-xs text-muted">Receive updates about new properties and inquiries</p>
-          </div>
-          <div class="w-10 h-6 rounded-full bg-primary cursor-pointer relative">
-            <div class="w-4 h-4 rounded-full bg-white absolute top-1 right-1 shadow-sm" />
-          </div>
-        </div>
-        <div class="flex items-center justify-between">
-          <div>
-            <p class="text-sm font-medium">Property Alerts</p>
-            <p class="text-xs text-muted">Get notified when new listings match your preferences</p>
-          </div>
-          <div class="w-10 h-6 rounded-full bg-muted cursor-pointer relative">
-            <div class="w-4 h-4 rounded-full bg-white absolute top-1 left-1 shadow-sm" />
-          </div>
-        </div>
-        <div class="flex items-center justify-between">
-          <div>
-            <p class="text-sm font-medium">Newsletter</p>
-            <p class="text-xs text-muted">Monthly market insights and luxury property highlights</p>
-          </div>
-          <div class="w-10 h-6 rounded-full bg-primary cursor-pointer relative">
-            <div class="w-4 h-4 rounded-full bg-white absolute top-1 right-1 shadow-sm" />
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="p-6 rounded-xl border border-default bg-elevated">
+    <div class="surface-card p-6">
       <h2 class="font-semibold mb-4">Saved Searches</h2>
       <div class="space-y-3">
         <div class="flex items-center justify-between p-3 rounded-lg border border-default">
@@ -86,24 +20,32 @@ import DashboardLayout from '../../layouts/DashboardLayout.astro';
             <p class="text-sm font-medium">Los Angeles Luxury Villas</p>
             <p class="text-xs text-muted">5+ beds, pool, ocean view &bull; 3 new listings</p>
           </div>
-          <span class="text-xs text-primary">View &rarr;</span>
+          <UButton to="#" variant="link" color="primary" size="sm" trailing-icon="i-lucide-arrow-right" label="View" />
         </div>
         <div class="flex items-center justify-between p-3 rounded-lg border border-default">
           <div>
             <p class="text-sm font-medium">Manhattan Penthouses</p>
             <p class="text-xs text-muted">4+ beds, terrace, Central Park view &bull; 1 new listing</p>
           </div>
-          <span class="text-xs text-primary">View &rarr;</span>
+          <UButton to="#" variant="link" color="primary" size="sm" trailing-icon="i-lucide-arrow-right" label="View" />
         </div>
         <div class="flex items-center justify-between p-3 rounded-lg border border-default">
           <div>
             <p class="text-sm font-medium">European Waterfront</p>
             <p class="text-xs text-muted">Lake Como, Côte d'Azur, Amalfi &bull; 6 new listings</p>
           </div>
-          <span class="text-xs text-primary">View &rarr;</span>
+          <UButton to="#" variant="link" color="primary" size="sm" trailing-icon="i-lucide-arrow-right" label="View" />
         </div>
       </div>
-      <button type="button" class="mt-4 text-sm text-primary hover:underline">+ New Saved Search</button>
+      <UButton
+        to="#"
+        variant="link"
+        color="primary"
+        size="sm"
+        leading-icon="i-lucide-plus"
+        label="New Saved Search"
+        class="mt-4 px-0"
+      />
     </div>
   </div>
 </DashboardLayout>

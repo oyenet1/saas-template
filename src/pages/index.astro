@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import PropertyCard from '../components/PropertyCard.vue';
+import SearchBar from '../components/SearchBar.vue';
 import { getFeaturedProperties } from '../data/properties';
 
 const featured = getFeaturedProperties();
@@ -56,32 +57,7 @@ const stats = [
   <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-12 relative z-30">
     <div class="surface-card p-6 lg:p-8 shadow-[var(--shadow-card)]">
       <p class="text-xs font-semibold uppercase tracking-wider text-muted mb-4">Search Listings</p>
-      <form action="/properties" method="GET" class="flex flex-col lg:flex-row gap-3">
-        <div class="flex-1">
-          <input
-            type="text"
-            name="search"
-            placeholder="Search by city, location, or keyword..."
-            class="input-field"
-          />
-        </div>
-        <select name="type" class="input-field lg:max-w-[180px]">
-          <option value="">All Types</option>
-          <option value="villa">Villa</option>
-          <option value="house">House</option>
-          <option value="apartment">Apartment</option>
-          <option value="penthouse">Penthouse</option>
-          <option value="land">Land</option>
-        </select>
-        <select name="status" class="input-field lg:max-w-[160px]">
-          <option value="">Buy & Rent</option>
-          <option value="sale">For Sale</option>
-          <option value="rent">For Rent</option>
-        </select>
-        <button type="submit" class="btn-primary shrink-0 justify-center">
-          Search
-        </button>
-      </form>
+      <SearchBar client:load />
     </div>
   </section>
 

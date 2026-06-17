@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import PropertyCard from '../../components/PropertyCard.vue';
+import PropertyFilters from '../../components/PropertyFilters.vue';
 import { properties, filterProperties, searchProperties, formatPrice, getCities, getPropertyTypes } from '../../data/properties';
 import type { Property } from '../../data/properties';
 
@@ -40,68 +41,15 @@ const types = getPropertyTypes();
 
     <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
       <aside class="lg:col-span-1">
-        <form method="GET" class="space-y-4 surface-card p-6 sticky top-28">
-          <div>
-            <label for="search" class="block text-sm font-medium mb-1.5">Search</label>
-            <input
-              type="text"
-              id="search"
-              name="search"
-              value={search}
-              placeholder="City, location, keyword..."
-              class="input-field"
-            />
-          </div>
-
-          <div>
-            <label for="type" class="block text-sm font-medium mb-1.5">Property Type</label>
-            <select id="type" name="type" class="input-field">
-              <option value="">All Types</option>
-              <option value="villa" selected={typeFilter === 'villa'}>Villa</option>
-              <option value="house" selected={typeFilter === 'house'}>House</option>
-              <option value="apartment" selected={typeFilter === 'apartment'}>Apartment</option>
-              <option value="penthouse" selected={typeFilter === 'penthouse'}>Penthouse</option>
-            </select>
-          </div>
-
-          <div>
-            <label for="status" class="block text-sm font-medium mb-1.5">Listing Type</label>
-            <select id="status" name="status" class="input-field">
-              <option value="">All</option>
-              <option value="sale" selected={statusFilter === 'sale'}>For Sale</option>
-              <option value="rent" selected={statusFilter === 'rent'}>For Rent</option>
-            </select>
-          </div>
-
-          <div>
-            <label for="city" class="block text-sm font-medium mb-1.5">City</label>
-            <select id="city" name="city" class="input-field">
-              <option value="">All Cities</option>
-              {cities.map((city) => (
-                <option value={city} selected={cityFilter === city}>{city}</option>
-              ))}
-            </select>
-          </div>
-
-          <div>
-            <label for="minBedrooms" class="block text-sm font-medium mb-1.5">Min Bedrooms</label>
-            <select id="minBedrooms" name="minBedrooms" class="input-field">
-              <option value="">Any</option>
-              <option value="3" selected={minBedrooms === 3}>3+</option>
-              <option value="4" selected={minBedrooms === 4}>4+</option>
-              <option value="5" selected={minBedrooms === 5}>5+</option>
-              <option value="6" selected={minBedrooms === 6}>6+</option>
-            </select>
-          </div>
-
-          <button type="submit" class="w-full btn-primary justify-center">
-            Apply Filters
-          </button>
-
-          <a href="/properties" class="block w-full btn-outline justify-center text-center">
-            Clear All
-          </a>
-        </form>
+        <PropertyFilters
+          client:load
+          search={search}
+          type={typeFilter}
+          status={statusFilter}
+          city={cityFilter}
+          minBedrooms={minBedrooms}
+          cities={cities}
+        />
       </aside>
 
       <div class="lg:col-span-3">
