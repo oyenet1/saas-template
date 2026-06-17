@@ -125,23 +125,23 @@ const similar = getFeaturedProperties().filter((p) => p.slug !== slug).slice(0, 
               type="text"
               placeholder="Your Name"
               required
-              class="w-full px-3 py-2.5 rounded-lg border border-default bg-default text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
+              class="input-field"
             />
             <input
               type="email"
               placeholder="Your Email"
               required
-              class="w-full px-3 py-2.5 rounded-lg border border-default bg-default text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
+              class="input-field"
             />
             <input
               type="tel"
               placeholder="Phone Number"
-              class="w-full px-3 py-2.5 rounded-lg border border-default bg-default text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
+              class="input-field"
             />
             <textarea
               placeholder={`I'm interested in ${property.title}...`}
               rows={3}
-              class="w-full px-3 py-2.5 rounded-lg border border-default bg-default text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 resize-none"
+              class="input-field resize-none"
             />
             <button
               type="submit"

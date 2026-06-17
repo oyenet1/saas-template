@@ -8,22 +8,41 @@
 @theme {
   --font-display: "Fraunces", Georgia, "Times New Roman", serif;
   --font-sans: "Plus Jakarta Sans", system-ui, sans-serif;
+  --outline-color-primary: var(--ui-primary);
+  --ring-color-primary: var(--ui-primary);
 }
 
 @layer base {
   :root,
   .light {
-    --ui-color-primary-50: oklch(98.4% 0.014 180.72);
-    --ui-color-primary-100: oklch(95.3% 0.051 180.801);
-    --ui-color-primary-200: oklch(91.7% 0.08 180.429);
-    --ui-color-primary-300: oklch(85.5% 0.138 181.071);
-    --ui-color-primary-400: oklch(77.7% 0.152 181.912);
-    --ui-color-primary-500: oklch(60.5% 0.118 184.704);
-    --ui-color-primary-600: oklch(51.1% 0.096 186.391);
-    --ui-color-primary-700: oklch(43.7% 0.078 188.216);
-    --ui-color-primary-800: oklch(38.6% 0.063 188.416);
-    --ui-color-primary-900: oklch(33.8% 0.051 189.815);
-    --ui-color-primary-950: oklch(24.5% 0.037 190.211);
+    --brand-emerald: #0f3a2e;
+    --brand-emerald-2: #1b5e4a;
+    --brand-gold: #c9a45c;
+    --brand-gold-2: #b08a3f;
+    --brand-ivory: #faf7f1;
+    --ui-color-primary-50: oklch(98% 0.018 158);
+    --ui-color-primary-100: oklch(95.2% 0.054 158.4);
+    --ui-color-primary-200: oklch(90.1% 0.105 158.5);
+    --ui-color-primary-300: oklch(83.1% 0.146 159);
+    --ui-color-primary-400: oklch(74.2% 0.165 159.5);
+    --ui-color-primary-500: oklch(65% 0.155 160.4);
+    --ui-color-primary-600: oklch(54.8% 0.135 161.4);
+    --ui-color-primary-700: oklch(46.1% 0.111 162.1);
+    --ui-color-primary-800: oklch(38.7% 0.091 162.6);
+    --ui-color-primary-900: oklch(32.5% 0.072 163.1);
+    --ui-color-primary-950: oklch(23.5% 0.051 163.5);
+
+    --ui-color-secondary-50: oklch(98.5% 0.018 85);
+    --ui-color-secondary-100: oklch(96.1% 0.045 85.5);
+    --ui-color-secondary-200: oklch(92% 0.082 85.7);
+    --ui-color-secondary-300: oklch(86.5% 0.115 85.9);
+    --ui-color-secondary-400: oklch(80.2% 0.135 86);
+    --ui-color-secondary-500: oklch(74.5% 0.135 86.1);
+    --ui-color-secondary-600: oklch(66% 0.12 86.2);
+    --ui-color-secondary-700: oklch(54.5% 0.095 86.3);
+    --ui-color-secondary-800: oklch(43.1% 0.07 86.4);
+    --ui-color-secondary-900: oklch(34% 0.05 86.5);
+    --ui-color-secondary-950: oklch(24.5% 0.035 86.6);
 
     --ui-color-neutral-50: oklch(99.2% 0.002 106.424);
     --ui-color-neutral-100: oklch(97.5% 0.004 106.472);
@@ -95,6 +114,38 @@
     font-weight: 600;
     letter-spacing: -0.02em;
   }
+
+  input,
+  select,
+  textarea,
+  button {
+    accent-color: var(--ui-primary);
+    caret-color: var(--ui-primary);
+  }
+
+  input:focus,
+  select:focus,
+  textarea:focus,
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible {
+    outline: none;
+  }
+
+  select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2351717a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.85rem center;
+    background-size: 1rem;
+    padding-right: 2.5rem;
+  }
+
+  select option:checked,
+  select option:hover {
+    background: var(--ui-color-primary-100);
+    color: var(--ui-color-primary-900);
+  }
 }
 
 @layer components {
@@ -129,13 +180,13 @@
     font-size: 0.875rem;
     font-weight: 600;
     transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
-    box-shadow: 0 1px 2px oklch(51.1% 0.096 186.391 / 0.2);
+    box-shadow: 0 1px 2px oklch(54.8% 0.135 161.4 / 0.2);
   }
 
   .btn-primary:hover {
     background: var(--ui-color-primary-700);
     transform: translateY(-1px);
-    box-shadow: 0 4px 12px oklch(51.1% 0.096 186.391 / 0.25);
+    box-shadow: 0 4px 12px oklch(54.8% 0.135 161.4 / 0.25);
   }
 
   .btn-outline {
@@ -166,15 +217,15 @@
     font-weight: 600;
     letter-spacing: 0.02em;
     text-transform: uppercase;
-    background: oklch(95.3% 0.051 180.801);
-    color: var(--ui-color-primary-700);
-    border: 1px solid oklch(91.7% 0.08 180.429);
+    background: oklch(95.2% 0.054 158.4);
+    color: var(--ui-color-primary-800);
+    border: 1px solid oklch(90.1% 0.105 158.5);
   }
 
   .dark .badge-soft {
-    background: oklch(51.1% 0.096 186.391 / 0.15);
+    background: oklch(46.1% 0.111 162.1 / 0.18);
     color: var(--ui-color-primary-300);
-    border-color: oklch(51.1% 0.096 186.391 / 0.25);
+    border-color: oklch(46.1% 0.111 162.1 / 0.3);
   }
 
   .input-field {
@@ -182,18 +233,52 @@
     padding: 0.75rem 1rem;
     border-radius: 0.75rem;
     border: 1px solid var(--surface-border);
-    background: var(--surface-elevated);
+    background-color: var(--surface-elevated);
     font-size: 0.875rem;
+    color: inherit;
+    accent-color: var(--ui-primary);
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  select.input-field {
+    padding-right: 2.5rem;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2351717a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.85rem center;
+    background-size: 1rem;
   }
 
   .input-field::placeholder {
     color: var(--ui-text-muted);
   }
 
-  .input-field:focus {
+  .input-field:focus,
+  .input-field:focus-visible {
     outline: none;
-    border-color: var(--ui-color-primary-400);
-    box-shadow: 0 0 0 3px oklch(77.7% 0.152 181.912 / 0.15);
+    border-color: var(--ui-color-primary-500);
+    box-shadow: 0 0 0 3px oklch(65% 0.155 160.4 / 0.2);
+  }
+
+  /* Nuxt UI form controls — primary focus ring everywhere */
+  [data-slot="base"]:focus,
+  [data-slot="base"]:focus-visible {
+    --tw-ring-color: var(--ui-primary);
+    outline-color: var(--ui-primary);
+  }
+
+  [data-slot="item"][data-highlighted]:not([data-disabled])::before {
+    background: oklch(95.2% 0.054 158.4 / 0.85) !important;
+  }
+
+  [data-slot="item"][data-highlighted]:not([data-disabled]) {
+    color: var(--ui-color-primary-900);
+  }
+
+  .dark [data-slot="item"][data-highlighted]:not([data-disabled])::before {
+    background: oklch(46.1% 0.111 162.1 / 0.22) !important;
+  }
+
+  .dark [data-slot="item"][data-highlighted]:not([data-disabled]) {
+    color: var(--ui-color-primary-300);
   }
 }

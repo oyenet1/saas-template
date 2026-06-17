@@ -54,6 +54,7 @@ function resetForm() {
         <UFormField label="Full Name" name="name" required>
           <UInput
             v-model="form.name"
+            color="primary"
             placeholder="John Doe"
             autocomplete="name"
             class="w-full"
@@ -62,6 +63,7 @@ function resetForm() {
         <UFormField label="Email" name="email" required>
           <UInput
             v-model="form.email"
+            color="primary"
             type="email"
             placeholder="john@example.com"
             autocomplete="email"
@@ -74,6 +76,7 @@ function resetForm() {
         <UFormField label="Phone" name="phone">
           <UInput
             v-model="form.phone"
+            color="primary"
             type="tel"
             placeholder="+1 (555) 000-0000"
             autocomplete="tel"
@@ -83,6 +86,7 @@ function resetForm() {
         <UFormField label="Inquiry Type" name="type">
           <USelect
             v-model="form.type"
+            color="primary"
             :items="inquiryTypes"
             value-key="value"
             class="w-full"
@@ -93,6 +97,7 @@ function resetForm() {
       <UFormField label="Message" name="message" required>
         <UTextarea
           v-model="form.message"
+          color="primary"
           :rows="5"
           placeholder="Tell us about your real estate needs..."
           :ui="{ base: 'resize-none' }"
