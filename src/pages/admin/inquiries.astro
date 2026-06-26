@@ -1,0 +1,14 @@
+---
+export const prerender = false;
+
+import AdminLayout from '../../layouts/AdminLayout.astro';
+import InquiryList from '../../components/admin/InquiryList.vue';
+---
+
+<AdminLayout title="Inquiries — Admin" description="Lead inquiries">
+  <div class="mb-8">
+    <h1 class="text-2xl font-bold">Inquiries</h1>
+    <p class="text-muted text-sm mt-1">Contact form submissions from your website.</p>
+  </div>
+  <InquiryList client:load />
+</AdminLayout>

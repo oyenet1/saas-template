@@ -4,10 +4,22 @@ import vue from '@astrojs/vue';
 import tailwindcss from '@tailwindcss/vite';
 import ui from '@nuxt/ui/vite';
 import cloudflare from '@astrojs/cloudflare';
+import node from '@astrojs/node';
+
+// Default to Node adapter so auth middleware and `prerender = false` routes
+// run on-demand in local dev. Use HOSTING=cloudflare for production builds.
+const hosting = process.env.HOSTING || 'node';
+
+const adapters = {
+  cloudflare: cloudflare({ imageService: true }),
+  node: node({ mode: 'standalone' }),
+};
+
+const selectedAdapter = adapters[hosting];
 
 export default defineConfig({
-  output: 'server',
-  adapter: cloudflare(),
+  output: selectedAdapter ? 'server' : 'static',
+  adapter: selectedAdapter ?? undefined,
   integrations: [vue({ appEntrypoint: './src/vue-app.ts' })],
   vite: {
     plugins: [
@@ -15,18 +27,10 @@ export default defineConfig({
       ui({
         colorMode: true,
         ui: {
-          colors: {
-            primary: 'blue',
-            neutral: 'slate',
-          },
+          colors: { primary: 'blue', neutral: 'slate' },
         },
         autoImport: {
-          imports: [
-            'vue',
-            'vue-router',
-            '@vueuse/core',
-            'vue-i18n',
-          ],
+          imports: ['vue', 'vue-router', '@vueuse/core', 'vue-i18n'],
         },
       }),
     ],

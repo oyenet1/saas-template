@@ -44,7 +44,7 @@ async function handleSubmit() {
       color: 'success',
       icon: 'i-lucide-check-circle-2',
     })
-    const dest = props.next && props.next.startsWith('/') ? props.next : '/dashboard'
+    const dest = props.next && props.next.startsWith('/') ? props.next : '/admin'
     if (typeof window !== 'undefined') window.location.assign(dest)
     return
   }

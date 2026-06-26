@@ -1,0 +1,31 @@
+---
+export const prerender = false;
+
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+import ContentManager from '../../../components/admin/ContentManager.vue';
+
+const serviceFields = [
+  { key: 'title', label: 'Title', type: 'text', required: true },
+  { key: 'summary', label: 'Summary', type: 'textarea' },
+  { key: 'body', label: 'Description', type: 'textarea', required: true },
+  { key: 'icon', label: 'Icon', type: 'text' },
+  { key: 'imageUrl', label: 'Image URL', type: 'url' },
+  { key: 'sortOrder', label: 'Sort order', type: 'number' },
+  { key: 'isActive', label: 'Active', type: 'boolean' },
+];
+---
+
+<AdminLayout title="Services — Admin" description="Services offered">
+  <div class="mb-8">
+    <h1 class="text-2xl font-bold">Services</h1>
+    <p class="text-muted text-sm mt-1">What your agency offers (sales, rentals, management, etc.).</p>
+  </div>
+  <ContentManager
+      client:load
+      resource="services"
+      collection-key="services"
+      singular-key="service"
+      title="Services"
+      fields={serviceFields}
+    />
+</AdminLayout>

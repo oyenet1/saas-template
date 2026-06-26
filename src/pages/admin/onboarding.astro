@@ -1,0 +1,10 @@
+---
+export const prerender = false;
+
+import AdminLayout from '../../layouts/AdminLayout.astro';
+import CompanyOnboardingForm from '../../components/admin/CompanyOnboardingForm.vue';
+---
+
+<AdminLayout title="Onboarding — Top Villa" description="Create your company">
+  <CompanyOnboardingForm client:load />
+</AdminLayout>

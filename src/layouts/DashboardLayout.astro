@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import Navbar from './Navbar.astro';
 import Footer from './Footer.astro';
+import ExternalApiNotice from '../components/ExternalApiNotice.vue';
 
 export interface Props {
   title?: string;
@@ -96,6 +97,7 @@ const currentPath = Astro.url.pathname;
           </nav>
         </aside>
         <main class="flex-1 min-w-0">
+          <ExternalApiNotice client:load />
           <slot />
         </main>
       </div>

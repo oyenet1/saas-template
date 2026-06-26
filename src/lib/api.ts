@@ -1,11 +1,15 @@
-const API_BASE: string =
-  (import.meta.env.PUBLIC_API_BASE_URL as string | undefined) || 'http://localhost:3000'
+/**
+ * Public + SSR data helpers. All requests hit the **external** Hono API
+ * (`PUBLIC_API_BASE_URL`). Local mock data is used only as a dev fallback
+ * when the API is down — see `api-config.ts`.
+ */
+import { apiUrl } from './api-config'
 
 /* ── Generic fetch with timeout + fallback ──────────────────── */
 
 async function apiFetch<T>(path: string, fallback: () => Promise<T>): Promise<T> {
   try {
-    const res = await fetch(`${API_BASE}${path}`, { signal: AbortSignal.timeout(3000) })
+    const res = await fetch(apiUrl(path), { signal: AbortSignal.timeout(3000) })
     if (!res.ok) throw new Error(`API ${res.status}`)
     const json = await res.json()
     if (!json.success) throw new Error(json.message || 'API error')

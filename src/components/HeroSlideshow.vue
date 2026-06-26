@@ -1,48 +1,18 @@
 <script setup lang="ts">
-const slides = [
-  {
-    image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1920&q=80',
-    alt: 'Luxury villa with ocean view',
-  },
-  {
-    image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1920&q=80',
-    alt: 'Modern luxury living room',
-  },
-  {
-    image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1920&q=80',
-    alt: 'Elegant mansion entrance',
-  },
-  {
-    image: 'https://images.unsplash.com/photo-1600566753376-12c8ab7fb144?w=1920&q=80',
-    alt: 'Luxury estate with pool',
-  },
-  {
-    image: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=1920&q=80',
-    alt: 'Minimalist luxury interior',
-  },
-  {
-    image: 'https://images.unsplash.com/photo-1600573472550-8090b5e0745e?w=1920&q=80',
-    alt: 'Grand stairway with chandelier',
-  },
-  {
-    image: 'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=1920&q=80',
-    alt: 'Modern kitchen with ocean views',
-  },
-  {
-    image: 'https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=1920&q=80',
-    alt: 'Luxury bedroom suite',
-  },
-]
+import { useBanners } from '../composables/useBanners'
+
+const { slides, fetchAll } = useBanners()
 
 const current = ref(0)
 const isPaused = ref(false)
-const total = slides.length
+const total = computed(() => slides.value.length)
 
 function next() {
-  current.value = (current.value + 1) % total
+  current.value = (current.value + 1) % total.value
 }
 
 onMounted(() => {
+  fetchAll()
   const timer = setInterval(() => {
     if (!isPaused.value) next()
   }, 5000)

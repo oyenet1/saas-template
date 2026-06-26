@@ -1,0 +1,37 @@
+---
+export const prerender = false;
+
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+import ContentManager from '../../../components/admin/ContentManager.vue';
+
+const bannerFields = [
+  { key: 'title', label: 'Title', type: 'text', required: true },
+  { key: 'subtitle', label: 'Subtitle', type: 'text' },
+  { key: 'imageUrl', label: 'Image URL', type: 'url' },
+  { key: 'ctaText', label: 'Button text', type: 'text' },
+  { key: 'ctaUrl', label: 'Button URL', type: 'url' },
+  { key: 'position', label: 'Position', type: 'select', options: [
+    { label: 'Home', value: 'home' },
+    { label: 'Properties', value: 'properties' },
+    { label: 'Sidebar', value: 'sidebar' },
+    { label: 'Popup', value: 'popup' },
+  ]},
+  { key: 'sortOrder', label: 'Sort order', type: 'number' },
+  { key: 'isActive', label: 'Active', type: 'boolean' },
+];
+---
+
+<AdminLayout title="Banners — Admin" description="Homepage banners">
+  <div class="mb-8">
+    <h1 class="text-2xl font-bold">Banners</h1>
+    <p class="text-muted text-sm mt-1">Hero slides and promotional banners on your site.</p>
+  </div>
+  <ContentManager
+      client:load
+      resource="banners"
+      collection-key="banners"
+      singular-key="banner"
+      title="Banners"
+      fields={bannerFields}
+    />
+</AdminLayout>

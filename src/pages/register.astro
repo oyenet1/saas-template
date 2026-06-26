@@ -1,12 +1,8 @@
 ---
+export const prerender = false;
+
 import RegisterForm from '../components/RegisterForm.vue'
 import Layout from '../layouts/Layout.astro'
-import { getSessionUser } from '../lib/auth-client'
-
-const user = await getSessionUser(Astro.request)
-if (user) {
-  return Astro.redirect('/dashboard')
-}
 
 const next = Astro.url.searchParams.get('next') ?? undefined
 ---

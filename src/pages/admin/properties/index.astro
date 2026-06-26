@@ -1,0 +1,14 @@
+---
+export const prerender = false;
+
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+import PropertyList from '../../../components/admin/PropertyList.vue';
+---
+
+<AdminLayout title="Properties — Admin" description="Manage property listings">
+  <div class="mb-8">
+    <h1 class="text-2xl font-bold">Properties</h1>
+    <p class="text-muted text-sm mt-1">Create and manage listings for your public site.</p>
+  </div>
+  <PropertyList client:load />
+</AdminLayout>

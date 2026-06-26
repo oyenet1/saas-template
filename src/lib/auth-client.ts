@@ -7,10 +7,10 @@
  * 🔄 Updated Date: 2026-06-17
  * 📝 File Description:
  *   Thin browser/SSR-friendly client for the Hono auth endpoints.
- *   Astro is frontend-only — every auth request flows through the
- *   Hono backend at `PUBLIC_API_BASE_URL`. The backend issues and
- *   reads the session cookie; this module never stores user data
- *   locally.
+ *   Astro is frontend-only — every auth request goes to the **external**
+ *   API at `PUBLIC_API_BASE_URL` (see `api-config.ts`). The backend
+ *   issues and reads the session cookie; this module never stores user
+ *   data locally.
  *
  *   Both the browser-side helpers (`login`, `logout`, `register`,
  *   `me`) and the SSR helpers (`getSessionUser`, `requireUser`) go
@@ -19,7 +19,7 @@
  * ──────────────────────────────────────────────────────────────────
  */
 
-const API_BASE_URL: string = (import.meta.env.PUBLIC_API_BASE_URL as string | undefined) || 'http://localhost:4000'
+import { API_BASE_URL, apiUrl } from './api-config'
 
 /** Shape of the user payload returned by the backend. */
 export interface SessionUser {
@@ -40,9 +40,9 @@ export interface ApiEnvelope<T> {
 
 /* ── Internal HTTP helper ─────────────────────────────────────────── */
 
-/** Strip the trailing slash from the API base URL to avoid `//api/v1/...`. */
+/** Build full URL for an API path on the external backend. */
 function api(path: string): string {
-  return `${API_BASE_URL.replace(/\/$/, '')}${path}`
+  return apiUrl(path)
 }
 
 export interface RequestOptions {
@@ -165,16 +165,9 @@ export async function getSessionUser(request: Request): Promise<SessionUser | nu
 }
 
 /**
- * Guard helper for protected Astro pages. When the caller is
- * unauthenticated, returns an `Astro.redirect()` to `/login?next=…`
- * with the current pathname preserved. When authenticated, returns
- * the session user.
- *
- * Usage in a `.astro` file:
- *
- *   const guard = await requireUser(Astro)
- *   if (guard instanceof Response) return guard
- *   const user = guard
+ * Optional page-level guard when middleware cannot run (e.g. legacy static
+ * builds). Primary protection is `src/middleware.ts` for `/admin` and
+ * `/dashboard` routes.
  */
 export async function requireUser(astro: {
   request: Request
