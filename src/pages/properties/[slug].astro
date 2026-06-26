@@ -14,7 +14,8 @@ if (!property) {
   return Astro.redirect('/properties');
 }
 
-const similar = getFeaturedProperties().filter((p) => p.slug !== slug).slice(0, 3);
+const allFeatured = await getFeaturedProperties();
+const similar = allFeatured.filter((p: any) => p.slug !== slug).slice(0, 3);
 ---
 
 <Layout

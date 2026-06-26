@@ -2,33 +2,39 @@
 import type { Testimony } from '../lib/api'
 
 const testimonials = ref<Testimony[]>([])
+const current = ref(0)
+const isPaused = ref(false)
+const total = computed(() => testimonials.value.length)
 
 onMounted(async () => {
   const { getTestimonies } = await import('../lib/api')
   testimonials.value = await getTestimonies()
 })
 
-const current = ref(0)
-const isPaused = ref(false)
-const total = testimonials.length
-
 function prev() {
-  current.value = (current.value - 1 + total) % total
+  const t = total.value
+  if (t > 0) current.value = (current.value - 1 + t) % t
 }
 
 function next() {
-  current.value = (current.value + 1) % total
+  const t = total.value
+  if (t > 0) current.value = (current.value + 1) % t
 }
 
 function goTo(index: number) {
   current.value = index
 }
 
+let timer: ReturnType<typeof setInterval> | null = null
+
 onMounted(() => {
-  const timer = setInterval(() => {
+  timer = setInterval(() => {
     if (!isPaused.value) next()
   }, 5000)
-  onUnmounted(() => clearInterval(timer))
+})
+
+onUnmounted(() => {
+  if (timer) clearInterval(timer)
 })
 </script>
 
