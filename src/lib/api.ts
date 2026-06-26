@@ -18,10 +18,8 @@ async function apiFetch<T>(path: string, fallback: () => Promise<T>): Promise<T>
 /* ── Property helpers ───────────────────────────────────────── */
 
 async function getApiProperties(): Promise<any[]> {
-  return apiFetch<{ properties: any[] }>('/api/v1/properties', () => {
-    const { properties: mock } = await import('../data/properties')
-    return { properties: mock }
-  }).then((d) => d.properties)
+  const { properties: mock } = await import('../data/properties')
+  return apiFetch<{ properties: any[] }>('/api/v1/properties', async () => ({ properties: mock })).then((d) => d.properties)
 }
 
 export async function getProperties(): Promise<Property[]> {
@@ -35,11 +33,11 @@ export async function getFeaturedProperties(): Promise<Property[]> {
 }
 
 export async function getPropertyBySlug(slug: string): Promise<Property | undefined> {
+  const { getPropertyBySlug: mock } = await import('../data/properties')
   try {
-    const data = await apiFetch<{ property: any }>(`/api/v1/properties/by-slug/${slug}`, () => {
-      const { getPropertyBySlug: mock } = await import('../data/properties')
-      return { property: mock(slug) ?? null }
-    })
+    const data = await apiFetch<{ property: any }>(`/api/v1/properties/by-slug/${slug}`, async () => ({
+      property: mock(slug) ?? null,
+    }))
     return data.property ? toProperty(data.property) : undefined
   } catch {
     return undefined
@@ -49,10 +47,8 @@ export async function getPropertyBySlug(slug: string): Promise<Property | undefi
 /* ── Agent helpers ──────────────────────────────────────────── */
 
 async function getApiTeams(): Promise<any[]> {
-  return apiFetch<{ teams: any[] }>('/api/v1/teams', () => {
-    const { agents: mock } = await import('../data/agents')
-    return { teams: mock }
-  }).then((d) => d.teams)
+  const { agents: mock } = await import('../data/agents')
+  return apiFetch<{ teams: any[] }>('/api/v1/teams', async () => ({ teams: mock })).then((d) => d.teams)
 }
 
 export async function getAgents(): Promise<Agent[]> {
@@ -71,11 +67,11 @@ export async function getAgentBySlug(slug: string): Promise<Agent | undefined> {
 }
 
 export async function getAgentById(id: number): Promise<Agent | undefined> {
+  const { agents: mock } = await import('../data/agents')
   try {
-    const data = await apiFetch<{ team: any }>(`/api/v1/teams/${id}`, () => {
-      const { agents: mock } = await import('../data/agents')
-      return { team: mock.find((a: any) => a.id === id) ?? null }
-    })
+    const data = await apiFetch<{ team: any }>(`/api/v1/teams/${id}`, async () => ({
+      team: mock.find((a: any) => a.id === id) ?? null,
+    }))
     return data.team ? toAgent(data.team) : undefined
   } catch {
     return undefined
@@ -85,16 +81,14 @@ export async function getAgentById(id: number): Promise<Agent | undefined> {
 /* ── Testimony helpers ──────────────────────────────────────── */
 
 export async function getTestimonies(): Promise<Testimony[]> {
-  return apiFetch<{ testimonies: any[] }>('/api/v1/testimonies', () => {
-    const data = [
-      { name: 'Sarah & James Mitchell', title: 'Bought Sunset Villa, Malibu', content: 'From the first viewing to the final handover, LuxEstate made the experience seamless.', rating: 5, imageUrl: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=200&q=80' },
-      { name: 'David Chen', title: 'Rented Aspen Mountain Lodge', content: 'The team\'s knowledge of the Aspen market was invaluable.', rating: 5, imageUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&q=80' },
-      { name: 'Olivia & Marcus Williams', title: 'Bought Mayfair Townhouse, London', content: 'LuxEstate guided us through every step.', rating: 5, imageUrl: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200&q=80' },
-      { name: 'Elena Petrova', title: 'Bought Palm Jumeirah Villa', content: 'Exceptional service that truly understands luxury real estate.', rating: 5, imageUrl: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=200&q=80' },
-      { name: 'Robert & Diane Kim', title: 'Sold Manhattan Sky Penthouse', content: 'LuxEstate sold our penthouse for 12% above asking.', rating: 5, imageUrl: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&q=80' },
-    ]
-    return { testimonies: data }
-  }).then((d) => d.testimonies)
+  const fallback = [
+    { name: 'Sarah & James Mitchell', title: 'Bought Sunset Villa, Malibu', content: 'From the first viewing to the final handover, LuxEstate made the experience seamless.', rating: 5, imageUrl: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=200&q=80' },
+    { name: 'David Chen', title: 'Rented Aspen Mountain Lodge', content: 'The team\'s knowledge of the Aspen market was invaluable.', rating: 5, imageUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&q=80' },
+    { name: 'Olivia & Marcus Williams', title: 'Bought Mayfair Townhouse, London', content: 'LuxEstate guided us through every step.', rating: 5, imageUrl: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200&q=80' },
+    { name: 'Elena Petrova', title: 'Bought Palm Jumeirah Villa', content: 'Exceptional service that truly understands luxury real estate.', rating: 5, imageUrl: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=200&q=80' },
+    { name: 'Robert & Diane Kim', title: 'Sold Manhattan Sky Penthouse', content: 'LuxEstate sold our penthouse for 12% above asking.', rating: 5, imageUrl: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&q=80' },
+  ]
+  return apiFetch<{ testimonies: any[] }>('/api/v1/testimonies', async () => ({ testimonies: fallback })).then((d) => d.testimonies)
 }
 
 /* ── Types ──────────────────────────────────────────────────── */
