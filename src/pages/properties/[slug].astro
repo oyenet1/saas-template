@@ -1,19 +1,14 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import { getPropertyBySlug, formatPrice, getFeaturedProperties } from '../../data/properties';
+import { getPropertyBySlug, getFeaturedProperties, formatPrice } from '../../lib/api';
 import PropertyCard from '../../components/PropertyCard.vue';
 import ImageGallery from '../../components/ImageGallery.vue';
 import InquiryForm from '../../components/InquiryForm.vue';
 
 export const prerender = false;
 
-export async function getStaticPaths() {
-  const { properties } = await import('../../data/properties');
-  return properties.map((p) => ({ params: { slug: p.slug } }));
-}
-
 const { slug } = Astro.params;
-const property = getPropertyBySlug(slug);
+const property = await getPropertyBySlug(slug || '');
 
 if (!property) {
   return Astro.redirect('/properties');

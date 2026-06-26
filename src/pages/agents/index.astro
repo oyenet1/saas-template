@@ -1,0 +1,117 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getAgents, getSpecialties } from '../../lib/api';
+import type { Agent } from '../../lib/api';
+
+const allAgents = await getAgents();
+const specialties = getSpecialties(allAgents);
+
+const specialtyFilter = Astro.url.searchParams.get('specialty') || '';
+const search = Astro.url.searchParams.get('search') || '';
+
+let results: Agent[] = [...allAgents];
+if (specialtyFilter) {
+  results = results.filter((a) => a.specialties.includes(specialtyFilter));
+}
+if (search) {
+  const q = search.toLowerCase();
+  results = results.filter(
+    (a) =>
+      a.name.toLowerCase().includes(q) ||
+      a.bio.toLowerCase().includes(q) ||
+      a.title.toLowerCase().includes(q) ||
+      a.specialties.some((s) => s.toLowerCase().includes(q)),
+  );
+}
+---
+
+<Layout
+  title="Our Agents \u2014 LuxEstate"
+  description="Meet our team of experienced luxury real estate professionals. Each agent brings deep market knowledge and white-glove service."
+>
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="mb-10">
+      <span class="badge-soft mb-4">Our Team</span>
+      <h1 class="text-4xl font-semibold">Meet Our Agents</h1>
+      <p class="text-muted mt-3 max-w-lg">Seasoned professionals dedicated to finding you the perfect property, wherever in the world that may be.</p>
+    </div>
+
+    <form method="GET" class="flex flex-col sm:flex-row gap-3 mb-10">
+      <div class="flex-1 surface-card overflow-hidden flex items-center px-4 gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-muted shrink-0"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <input
+          type="text"
+          name="search"
+          value={search}
+          placeholder="Search agents by name, specialty..."
+          class="w-full py-3 bg-transparent text-sm focus:outline-none"
+        />
+      </div>
+      <select name="specialty" class="input-field sm:max-w-[200px]">
+        <option value="">All Specialties</option>
+        {specialties.map((s) => (
+          <option value={s} selected={specialtyFilter === s}>{s}</option>
+        ))}
+      </select>
+      <button type="submit" class="btn-primary shrink-0 justify-center">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        Filter
+      </button>
+      {(search || specialtyFilter) && (
+        <a href="/agents" class="btn-outline shrink-0 justify-center">Clear</a>
+      )}
+    </form>
+
+    {results.length === 0 ? (
+      <div class="text-center py-20">
+        <p class="text-4xl mb-4">{'\u{1f464}'}</p>
+        <h3 class="text-lg font-semibold">No agents found</h3>
+        <p class="text-muted mt-2">Try adjusting your search or filter.</p>
+      </div>
+    ) : (
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {results.map((agent) => (
+          <a
+            href={`/agents/${agent.slug}`}
+            class="group surface-card surface-card-hover overflow-hidden"
+          >
+            <div class="relative aspect-[4/5] overflow-hidden">
+              <img
+                src={agent.imageUrl}
+                alt={agent.name}
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                loading="lazy"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+              <div class="absolute bottom-0 left-0 right-0 p-5">
+                {agent.featured && (
+                  <span class="px-2.5 py-1 rounded-full text-[11px] font-semibold uppercase tracking-wide bg-primary text-white shadow-sm mb-2 inline-block">
+                    Featured
+                  </span>
+                )}
+                <h3 class="text-white text-lg font-semibold">{agent.name}</h3>
+                <p class="text-white/80 text-sm">{agent.title}</p>
+              </div>
+            </div>
+            <div class="p-5 space-y-3">
+              <div class="flex items-center gap-1">
+                {Array.from({ length: agent.rating }, (_, i) => (
+                  <svg key={i} xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" class="text-amber-400"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                ))}
+              </div>
+              <div class="flex flex-wrap gap-1.5">
+                {agent.specialties.slice(0, 3).map((s) => (
+                  <span class="px-2 py-0.5 rounded-full text-[11px] font-medium bg-primary/10 text-primary border border-primary/20">{s}</span>
+                ))}
+              </div>
+              <div class="flex items-center gap-4 pt-2 text-sm text-muted">
+                <span>{agent.propertiesSold} sold</span>
+                <span>{agent.experience} yrs</span>
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
+    )}
+  </section>
+</Layout>

@@ -2,8 +2,10 @@
 import Layout from '../../layouts/Layout.astro';
 import PropertyCard from '../../components/PropertyCard.vue';
 import PropertyFilters from '../../components/PropertyFilters.vue';
-import { properties, filterProperties, searchProperties, formatPrice, getCities, getPropertyTypes } from '../../data/properties';
-import type { Property } from '../../data/properties';
+import { getProperties, searchProperties, filterProperties, formatPrice, getCities, getPropertyTypes } from '../../lib/api';
+import type { Property } from '../../lib/api';
+
+const allProperties = await getProperties();
 
 const search = Astro.url.searchParams.get('search') || '';
 const typeFilter = Astro.url.searchParams.get('type') || '';
@@ -13,9 +15,9 @@ const minPrice = Number(Astro.url.searchParams.get('minPrice')) || 0;
 const maxPrice = Number(Astro.url.searchParams.get('maxPrice')) || 0;
 const minBedrooms = Number(Astro.url.searchParams.get('minBedrooms')) || 0;
 
-let results: Property[] = search ? searchProperties(search) : properties;
+let results: Property[] = search ? searchProperties(allProperties, search) : allProperties;
 
-results = filterProperties({
+results = filterProperties(results, {
   type: typeFilter || undefined,
   status: statusFilter || undefined,
   minPrice: minPrice || undefined,
@@ -24,8 +26,8 @@ results = filterProperties({
   city: cityFilter || undefined,
 });
 
-const cities = getCities();
-const types = getPropertyTypes();
+const cities = getCities(allProperties);
+const propertyTypes = getPropertyTypes(allProperties);
 ---
 
 <Layout

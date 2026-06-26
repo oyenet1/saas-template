@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { Property } from '../data/properties'
-import { formatPrice } from '../data/properties'
+import type { Property } from '../lib/api'
+import { formatPrice } from '../lib/api'
 
 const props = defineProps<{ property: Property }>()
 
