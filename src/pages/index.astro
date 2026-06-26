@@ -1,12 +1,15 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import PropertyCard from '../components/PropertyCard.vue';
-import SearchBar from '../components/SearchBar.vue';
-import TestimonialsSlider from '../components/TestimonialsSlider.vue';
-import { getFeaturedProperties, getFeaturedAgents } from '../lib/api';
+import HeroSlideshow from '../components/HeroSlideshow.vue';
+import AgentCard from '../components/AgentCard.vue';
+import TestimonialsCarousel from '../components/TestimonialsCarousel.vue';
+import { getFeaturedProperties } from '../data/properties';
+import { getFeaturedAgents } from '../data/agents';
+import { testimonies } from '../data/testimonies';
 
-const featured = await getFeaturedProperties();
-const featuredAgents = await getFeaturedAgents();
+const featured = getFeaturedProperties();
+const featuredAgents = getFeaturedAgents();
 const stats = [
   { value: '150+', label: 'Properties Sold' },
   { value: '12', label: 'Years Experience' },
@@ -16,54 +19,12 @@ const stats = [
 ---
 
 <Layout
-  title="LuxEstate — Exceptional Properties Worldwide"
+  title="Top Villa Luxury Homes — Exceptional Properties Worldwide"
   description="Discover extraordinary real estate. Curated luxury properties in the world's most desirable locations."
 >
-  <section class="relative min-h-[640px] flex items-center overflow-hidden bg-white">
-    <div class="absolute inset-0 z-0">
-      <img
-        src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1920&q=80"
-        alt="Luxury real estate"
-        class="w-full h-full object-cover scale-105"
-        loading="eager"
-      />
-      <div class="absolute inset-0 bg-gradient-to-r from-white via-white/95 to-white/40 dark:from-[var(--surface-page)] dark:via-[var(--surface-page)]/95 dark:to-[var(--surface-page)]/40 z-10" />
-      <div class="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent dark:from-[var(--surface-page)] z-10" />
-    </div>
+  <HeroSlideshow client:load />
 
-    <div class="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 w-full">
-      <div class="max-w-2xl">
-        <span class="badge-soft mb-6">
-          Premium Property Management
-        </span>
-        <h1 class="text-4xl sm:text-5xl lg:text-[3.5rem] font-semibold leading-[1.1] text-default">
-          Find Your Perfect<br />
-          <span class="text-primary italic">Place to Call Home</span>
-        </h1>
-        <p class="mt-6 text-lg text-muted leading-relaxed max-w-lg">
-          Explore a curated collection of exceptional properties in the world's most sought-after locations — from beachfront villas to urban penthouses.
-        </p>
-        <div class="mt-10 flex flex-wrap gap-4">
-          <a href="/properties" class="btn-primary">
-            Explore Properties
-            <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-          </a>
-          <a href="/about" class="btn-outline">
-            About Us
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-12 relative z-30">
-    <div class="surface-card p-6 lg:p-8 shadow-[var(--shadow-card)]">
-      <p class="text-xs font-semibold uppercase tracking-wider text-muted mb-4">Search Listings</p>
-      <SearchBar client:load />
-    </div>
-  </section>
-
-  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-20">
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-24">
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4 lg:gap-6">
       {stats.map((stat) => (
         <div class="surface-card surface-card-hover text-center p-6 lg:p-8">
@@ -88,32 +49,7 @@ const stats = [
     </div>
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4 lg:gap-6">
       {featuredAgents.map((agent) => (
-        <a
-          href={`/agents/${agent.slug}`}
-          class="group surface-card surface-card-hover overflow-hidden"
-        >
-          <div class="relative aspect-square overflow-hidden">
-            <img
-              src={agent.imageUrl}
-              alt={agent.name}
-              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-              loading="lazy"
-            />
-            <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
-            <div class="absolute bottom-0 left-0 right-0 p-4">
-              <h3 class="text-white font-semibold text-sm">{agent.name}</h3>
-              <p class="text-white/70 text-xs mt-0.5">{agent.title}</p>
-            </div>
-          </div>
-          <div class="p-4">
-            <div class="flex items-center gap-1 mb-1">
-              {Array.from({ length: agent.rating }, (_, i) => (
-                <svg key={i} xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" class="text-amber-400"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-              ))}
-            </div>
-            <p class="text-xs text-muted">{agent.specialties.slice(0, 2).join(' \u2022 ')}</p>
-          </div>
-        </a>
+        <AgentCard client:load agent={agent} />
       ))}
     </div>
   </section>
@@ -145,11 +81,11 @@ const stats = [
         <h2 class="text-3xl lg:text-4xl font-semibold">What Our Clients Say</h2>
         <p class="text-muted mt-3 max-w-lg mx-auto">Real stories from real clients who trusted us with their most important asset.</p>
       </div>
-      <TestimonialsSlider client:load />
+      <TestimonialsCarousel client:load testimonials={testimonies} />
     </div>
   </section>
 
-  <section class="section-muted mt-24 py-24">
+  <section class="mt-24 py-24">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="surface-card overflow-hidden shadow-[var(--shadow-card)]">
         <div class="grid md:grid-cols-2">

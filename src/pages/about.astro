@@ -1,65 +1,34 @@
 ---
 import Layout from '../layouts/Layout.astro';
-
-const team = [
-  {
-    name: 'Alexander Voss',
-    role: 'Founder & CEO',
-    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80',
-  },
-  {
-    name: 'Isabella Chen',
-    role: 'Head of Luxury Sales',
-    image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&q=80',
-  },
-  {
-    name: 'Marcus Rivera',
-    role: 'Senior Property Advisor',
-    image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&q=80',
-  },
-  {
-    name: 'Sophie Laurent',
-    role: 'International Client Relations',
-    image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&q=80',
-  },
-];
 ---
 
 <Layout
-  title="About Us — LuxEstate"
-  description="Learn about LuxEstate — a premier real estate agency with over a decade of experience connecting discerning clients with exceptional properties worldwide."
+  title="About Us — Top Villa Luxury Homes"
+  description="Top Villa Luxury Homes — a premium real estate development and advisory company delivering exceptional homes, land, and commercial properties across Nigeria."
 >
   <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
     <div class="max-w-3xl">
       <span class="badge-soft mb-4">
-        About LuxEstate
+        About Top Villa Luxury Homes
       </span>
-      <h1 class="text-4xl lg:text-5xl font-semibold">A Tradition of Excellence in Real Estate</h1>
+      <h1 class="text-4xl lg:text-5xl font-semibold">Who We Are</h1>
       <p class="mt-6 text-lg text-muted leading-relaxed">
-        Founded in 2010, LuxEstate has grown from a boutique agency in Beverly Hills to a global network spanning
-        24 cities across 12 countries. We believe buying or selling a property is one of life's most significant
-        decisions — and we treat it with the care, discretion, and expertise it deserves.
+        Top Villa Luxury Homes is a premium real estate development and advisory company committed to delivering exceptional homes, land, and commercial properties. We operate across the full real estate value chain — strategically acquiring prime land and properties, developing high-quality projects, and delivering seamless ownership solutions to our clients.
+      </p>
+      <p class="mt-4 text-lg text-muted leading-relaxed">
+        With a strong understanding of the Nigerian real estate market, we combine local expertise with global best practices to create properties that reflect luxury, functionality, and long-term value.
       </p>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mt-16">
       <div>
-        <h2 class="text-2xl font-bold mb-4">Our Philosophy</h2>
+        <h2 class="text-2xl font-bold mb-4">Our Mission</h2>
         <div class="space-y-4 text-muted leading-relaxed">
           <p>
-            At LuxEstate, we don't just sell properties — we craft experiences. Every listing in our portfolio
-            is personally vetted by our senior advisors. We represent fewer properties than most agencies
-            because we believe in quality over quantity.
+            To acquire and carefully select prime land and properties, develop high-quality homes and real estate projects, and deliver seamless ownership through secure, transparent, and professionally managed processes.
           </p>
           <p>
-            Our clients include Fortune 500 executives, international investors, and discerning individuals
-            seeking homes that match their aspirations. We provide white-glove service from the first
-            conversation through closing and beyond.
-          </p>
-          <p>
-            With a dedicated research team tracking market trends across 24 cities, we provide our clients
-            with data-driven insights that inform smarter decisions. Our average time-to-close is 30% faster
-            than the industry standard.
+            We are committed to guiding individuals, families, and investors with integrity and expert support, providing real estate solutions they can trust, grow with, and invest in confidently for the long term.
           </p>
         </div>
       </div>
@@ -67,45 +36,58 @@ const team = [
       <div class="relative rounded-2xl overflow-hidden min-h-[350px]">
         <img
           src="https://images.unsplash.com/photo-1600585154084-4e5fe7c39198?w=800&q=80"
-          alt="LuxEstate office"
+          alt="Top Villa Luxury Homes premium property"
           class="absolute inset-0 w-full h-full object-cover"
           loading="lazy"
         />
       </div>
     </div>
 
-    <div class="mt-20">
-      <h2 class="text-2xl font-bold text-center mb-10">Meet Our Leadership</h2>
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-        {team.map((member) => (
-          <div class="text-center">
-            <div class="relative aspect-square rounded-xl overflow-hidden mb-4">
-              <img
-                src={member.image}
-                alt={member.name}
-                class="w-full h-full object-cover"
-                loading="lazy"
-              />
-            </div>
-            <h3 class="font-semibold text-sm">{member.name}</h3>
-            <p class="text-xs text-muted mt-0.5">{member.role}</p>
-          </div>
-        ))}
+    <div class="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="p-8 rounded-xl surface-card text-center">
+        <div class="text-4xl mb-4 text-primary">
+          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="mx-auto"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        <p class="text-3xl font-bold text-primary font-[family-name:var(--font-display)]">Prime Land</p>
+        <p class="text-sm text-muted mt-2">Strategic acquisition of premium land and properties in high-value locations across Nigeria.</p>
+      </div>
+      <div class="p-8 rounded-xl surface-card text-center">
+        <div class="text-4xl mb-4 text-primary">
+          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="mx-auto"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <p class="text-3xl font-bold text-primary font-[family-name:var(--font-display)]">Quality Homes</p>
+        <p class="text-sm text-muted mt-2">Developing high-quality residential and commercial projects with attention to every detail.</p>
+      </div>
+      <div class="p-8 rounded-xl surface-card text-center">
+        <div class="text-4xl mb-4 text-primary">
+          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="mx-auto"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <p class="text-3xl font-bold text-primary font-[family-name:var(--font-display)]">Trusted Process</p>
+        <p class="text-sm text-muted mt-2">Seamless ownership through secure, transparent, and professionally managed transactions.</p>
       </div>
     </div>
 
-    <div class="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8">
-      <div class="p-6 rounded-xl surface-card text-center">
-        <p class="text-4xl font-bold text-primary">150+</p>
-        <p class="text-sm text-muted mt-2">Properties sold annually in the luxury segment</p>
+    <div class="mt-20 section-muted -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-20">
+      <div class="max-w-3xl mx-auto text-center">
+        <h2 class="text-3xl font-semibold">Our Vision</h2>
+        <p class="mt-6 text-lg text-muted leading-relaxed">
+          To be the most trusted name in Nigerian real estate — known for uncompromising quality, transparent dealings, and a relentless commitment to helping our clients build wealth and find homes they love.
+        </p>
       </div>
-      <div class="p-6 rounded-xl surface-card text-center">
-        <p class="text-4xl font-bold text-primary">$2.4B</p>
-        <p class="text-sm text-muted mt-2">Total transaction value across our portfolio</p>
-      </div>
-      <div class="p-6 rounded-xl surface-card text-center">
-        <p class="text-4xl font-bold text-primary">98%</p>
-        <p class="text-sm text-muted mt-2">Client satisfaction rate over the past 5 years</p>
+    </div>
+
+    <div class="mt-20 max-w-2xl mx-auto text-center">
+      <h2 class="text-2xl font-semibold">Ready to work with us?</h2>
+      <p class="text-muted mt-3">
+        Whether you're buying your first home, looking for prime land, or seeking a trusted investment partner — we're here to help.
+      </p>
+      <div class="mt-8 flex flex-wrap gap-4 justify-center">
+        <a href="/contact" class="btn-primary">
+          Contact Us
+        </a>
+        <a href="/properties" class="btn-outline">
+          Browse Properties
+        </a>
       </div>
     </div>
   </section>

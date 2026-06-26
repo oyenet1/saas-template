@@ -1,0 +1,9 @@
+import type { Testimony } from '../lib/api'
+
+export const testimonies: Testimony[] = [
+  { name: 'Sarah & James Mitchell', title: 'Bought Sunset Villa, Malibu', content: 'From the first viewing to the final handover, LuxEstate made the experience seamless. Their attention to detail and market knowledge gave us the confidence to make the right decision.', rating: 5, imageUrl: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=200&q=80' },
+  { name: 'David Chen', title: 'Rented Aspen Mountain Lodge', content: 'The team\'s knowledge of the Aspen market was invaluable. They found us a spectacular mountain lodge that exceeded every expectation. Truly white-glove service.', rating: 5, imageUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&q=80' },
+  { name: 'Olivia & Marcus Williams', title: 'Bought Mayfair Townhouse, London', content: 'LuxEstate guided us through every step of acquiring our London townhouse. From navigating the complex legal landscape to finding the perfect property, they were exceptional.', rating: 5, imageUrl: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200&q=80' },
+  { name: 'Elena Petrova', title: 'Bought Palm Jumeirah Villa', content: 'Exceptional service that truly understands luxury real estate. The team went above and beyond to ensure every detail was perfect, from visas to interior design recommendations.', rating: 5, imageUrl: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=200&q=80' },
+  { name: 'Robert & Diane Kim', title: 'Sold Manhattan Sky Penthouse', content: 'LuxEstate sold our penthouse for 12% above asking price. Their marketing strategy and network of qualified buyers made all the difference. We couldn\'t be happier.', rating: 5, imageUrl: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&q=80' },
+]

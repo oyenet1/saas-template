@@ -15,7 +15,6 @@
 @layer base {
   :root,
   .light {
-    /* TVLH brand: gold primary, charcoal/black secondary, white surfaces */
     --brand-gold: #b39359;
     --brand-gold-2: #8e7340;
     --brand-gold-3: #6b5630;
@@ -25,17 +24,17 @@
     --brand-hot: #dd3333;
     --brand-for-sale: #7aba1e;
 
-    --ui-color-primary-50: #faf5ea;
-    --ui-color-primary-100: #f3e8cf;
-    --ui-color-primary-200: #e7d2a3;
-    --ui-color-primary-300: #d9b97a;
-    --ui-color-primary-400: #c8a468;
-    --ui-color-primary-500: #b39359;
-    --ui-color-primary-600: #9c7e48;
-    --ui-color-primary-700: #80663a;
-    --ui-color-primary-800: #634e2c;
-    --ui-color-primary-900: #46371f;
-    --ui-color-primary-950: #2b2113;
+    --ui-color-primary-50: #edf4ff;
+    --ui-color-primary-100: #deeaff;
+    --ui-color-primary-200: #c3d7ff;
+    --ui-color-primary-300: #9ebcff;
+    --ui-color-primary-400: #7897ff;
+    --ui-color-primary-500: #5872fc;
+    --ui-color-primary-600: #3a49f1;
+    --ui-color-primary-700: #2d37d5;
+    --ui-color-primary-800: #2731ac;
+    --ui-color-primary-900: #283187;
+    --ui-color-primary-950: #171b4f;
 
     --ui-color-secondary-50: oklch(98.5% 0.018 85);
     --ui-color-secondary-100: oklch(96.1% 0.045 85.5);
@@ -61,7 +60,7 @@
     --ui-color-neutral-900: oklch(21.6% 0.006 106.423);
     --ui-color-neutral-950: oklch(14.7% 0.004 106.423);
 
-    --ui-primary: var(--ui-color-primary-500);
+    --ui-primary: var(--ui-color-primary-900);
     --ui-secondary: var(--ui-color-secondary-500);
     --ui-success: var(--ui-color-success-500);
     --ui-info: var(--ui-color-info-500);
@@ -78,7 +77,7 @@
   }
 
   .dark {
-    --ui-primary: var(--ui-color-primary-600);
+    --ui-primary: var(--ui-color-primary-700);
     --ui-secondary: var(--ui-color-secondary-400);
     --ui-success: var(--ui-color-success-400);
     --ui-info: var(--ui-color-info-400);
@@ -87,17 +86,17 @@
     --ui-text: #fff;
     --ui-text-highlighted: #fff;
     --ui-text-toned: #fff;
-    --ui-text-muted: oklch(80% 0 0);
-    --ui-text-dimmed: oklch(65% 0 0);
-    --ui-text-inverted: var(--ui-color-neutral-900);
+    --ui-text-muted: oklch(75% 0.015 265);
+    --ui-text-dimmed: oklch(60% 0.015 265);
+    --ui-text-inverted: #0f1326;
 
-    --surface-page: var(--ui-color-neutral-950);
-    --surface-muted: var(--ui-color-neutral-900);
-    --surface-elevated: var(--ui-color-neutral-900);
-    --surface-border: var(--ui-color-neutral-800);
-    --shadow-soft: 0 1px 2px oklch(0% 0 0 / 0.2), 0 8px 24px oklch(0% 0 0 / 0.3);
-    --shadow-card: 0 1px 3px oklch(0% 0 0 / 0.25), 0 12px 32px oklch(0% 0 0 / 0.35);
-    --shadow-nav: 0 1px 0 var(--ui-color-neutral-800);
+    --surface-page: #0a0d1a;
+    --surface-muted: #0f1326;
+    --surface-elevated: #0f1326;
+    --surface-border: #1a1f3a;
+    --shadow-soft: 0 1px 2px oklch(0% 0 0 / 0.3), 0 8px 24px oklch(0% 0 0 / 0.4);
+    --shadow-card: 0 1px 3px oklch(0% 0 0 / 0.35), 0 12px 32px oklch(0% 0 0 / 0.5);
+    --shadow-nav: 0 1px 0 #1a1f3a;
   }
 
   html {

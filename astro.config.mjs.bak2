@@ -3,11 +3,14 @@ import { defineConfig } from 'astro/config';
 import vue from '@astrojs/vue';
 import tailwindcss from '@tailwindcss/vite';
 import ui from '@nuxt/ui/vite';
-import cloudflare from '@astrojs/cloudflare';
+
+const adapter = process.env.CF_PAGES
+  ? (await import('@astrojs/cloudflare')).default()
+  : (await import('@astrojs/node')).default({ mode: 'standalone' });
 
 export default defineConfig({
   output: 'server',
-  adapter: cloudflare(),
+  adapter,
   integrations: [vue({ appEntrypoint: './src/vue-app.ts' })],
   vite: {
     plugins: [
