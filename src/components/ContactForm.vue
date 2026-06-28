@@ -54,6 +54,7 @@ function resetForm() {
         <UFormField label="Full Name" name="name" required>
           <UInput
             v-model="form.name"
+            size="xl"
             color="primary"
             placeholder="John Doe"
             autocomplete="name"
@@ -63,6 +64,7 @@ function resetForm() {
         <UFormField label="Email" name="email" required>
           <UInput
             v-model="form.email"
+            size="xl"
             color="primary"
             type="email"
             placeholder="john@example.com"
@@ -76,6 +78,7 @@ function resetForm() {
         <UFormField label="Phone" name="phone">
           <UInput
             v-model="form.phone"
+            size="xl"
             color="primary"
             type="tel"
             placeholder="+1 (555) 000-0000"
@@ -86,6 +89,7 @@ function resetForm() {
         <UFormField label="Inquiry Type" name="type">
           <USelect
             v-model="form.type"
+            size="xl"
             color="primary"
             :items="inquiryTypes"
             value-key="value"
@@ -97,6 +101,7 @@ function resetForm() {
       <UFormField label="Message" name="message" required>
         <UTextarea
           v-model="form.message"
+          size="xl"
           color="primary"
           :rows="5"
           placeholder="Tell us about your real estate needs..."
@@ -107,12 +112,12 @@ function resetForm() {
 
       <UButton
         type="submit"
+        size="xl"
         :loading="loading"
         :disabled="loading"
         label="Send Message"
         icon="i-lucide-send"
         color="primary"
-        size="lg"
       />
     </UForm>
 
@@ -127,6 +132,7 @@ function resetForm() {
       </p>
       <UButton
         class="mt-6"
+        size="xl"
         color="neutral"
         variant="outline"
         label="Send Another Message"

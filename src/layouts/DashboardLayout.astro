@@ -1,7 +1,7 @@
 ---
 import '../styles/global.css';
-import Navbar from './Navbar.astro';
-import Footer from './Footer.astro';
+import AuthNavbar from './AuthNavbar.astro';
+import AuthFooter from './AuthFooter.astro';
 import ExternalApiNotice from '../components/ExternalApiNotice.vue';
 
 export interface Props {
@@ -70,7 +70,7 @@ const currentPath = Astro.url.pathname;
     </script>
   </head>
   <body class="isolate bg-[var(--surface-muted)] text-default">
-    <Navbar />
+    <AuthNavbar />
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <div class="flex gap-8">
         <aside class="hidden lg:block w-64 shrink-0">
@@ -102,6 +102,6 @@ const currentPath = Astro.url.pathname;
         </main>
       </div>
     </div>
-    <Footer />
+    <AuthFooter />
   </body>
 </html>

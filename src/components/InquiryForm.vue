@@ -50,7 +50,7 @@ function reset() {
         v-model="form.name"
         placeholder="Your Name"
         autocomplete="name"
-        size="lg"
+        size="xl"
         class="w-full"
       />
     </UFormField>
@@ -60,7 +60,7 @@ function reset() {
         type="email"
         placeholder="Your Email"
         autocomplete="email"
-        size="lg"
+        size="xl"
         class="w-full"
       />
     </UFormField>
@@ -70,7 +70,7 @@ function reset() {
         type="tel"
         placeholder="Phone Number"
         autocomplete="tel"
-        size="lg"
+        size="xl"
         class="w-full"
       />
     </UFormField>
@@ -80,7 +80,7 @@ function reset() {
         :rows="3"
         :placeholder="`I'm interested in ${propertyTitle}...`"
         :ui="{ base: 'resize-none' }"
-        size="lg"
+        size="xl"
         class="w-full"
       />
     </UFormField>
@@ -91,7 +91,7 @@ function reset() {
       :disabled="loading"
       label="Send Inquiry"
       icon="i-lucide-send"
-      size="lg"
+      size="xl"
       block
       class="justify-center"
     />
@@ -103,13 +103,13 @@ function reset() {
     </div>
     <h3 class="font-semibold">Inquiry sent</h3>
     <p class="text-sm text-muted mt-1">Our team will reach out shortly.</p>
-    <UButton
-      class="mt-4"
-      color="neutral"
-      variant="outline"
-      label="Send another"
-      size="sm"
-      @click="reset"
-    />
+      <UButton
+        class="mt-4"
+        size="xl"
+        color="neutral"
+        variant="outline"
+        label="Send another"
+        @click="reset"
+      />
   </div>
 </template>

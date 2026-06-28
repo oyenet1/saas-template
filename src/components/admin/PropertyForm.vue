@@ -138,51 +138,52 @@ async function onSubmit() {
   <div class="surface-card p-6 max-w-3xl">
     <UForm :state="form" class="space-y-5" @submit="onSubmit">
       <UFormField label="Title" name="title" :error="fieldErrors.title" required>
-        <UInput v-model="form.title" class="w-full" />
+        <UInput v-model="form.title" size="xl" class="w-full" />
       </UFormField>
       <UFormField label="Slug" name="slug" :error="fieldErrors.slug" hint="Auto-generated if empty">
-        <UInput v-model="form.slug" class="w-full" />
+        <UInput v-model="form.slug" size="xl" class="w-full" />
       </UFormField>
       <UFormField label="Description" name="description" :error="fieldErrors.description">
-        <UTextarea v-model="form.description" :rows="4" class="w-full" />
+        <UTextarea v-model="form.description" size="xl" :rows="4" class="w-full" />
       </UFormField>
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <UFormField label="Purpose" name="purpose">
-          <USelect v-model="form.purpose" :items="purposeOptions" class="w-full" />
+          <USelect v-model="form.purpose" size="xl" :items="purposeOptions" class="w-full" />
         </UFormField>
         <UFormField label="Status" name="status">
-          <USelect v-model="form.status" :items="statusOptions" class="w-full" />
+          <USelect v-model="form.status" size="xl" :items="statusOptions" class="w-full" />
         </UFormField>
         <UFormField label="Type" name="propertyType">
-          <USelect v-model="form.propertyType" :items="typeOptions" class="w-full" />
+          <USelect v-model="form.propertyType" size="xl" :items="typeOptions" class="w-full" />
         </UFormField>
       </div>
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <UFormField label="Price" name="price" :error="fieldErrors.price">
-          <UInput v-model.number="form.price" type="number" min="0" class="w-full" />
+          <UInput v-model.number="form.price" size="xl" type="number" min="0" class="w-full" />
         </UFormField>
         <UFormField label="Currency" name="currency">
-          <UInput v-model="form.currency" maxlength="3" class="w-full" />
+          <UInput v-model="form.currency" size="xl" maxlength="3" class="w-full" />
         </UFormField>
         <UFormField label="Area (sqm)" name="area">
-          <UInput v-model.number="form.area" type="number" min="0" class="w-full" />
+          <UInput v-model.number="form.area" size="xl" type="number" min="0" class="w-full" />
         </UFormField>
       </div>
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <UFormField label="Bedrooms" name="bedrooms">
-          <UInput v-model.number="form.bedrooms" type="number" min="0" class="w-full" />
+          <UInput v-model.number="form.bedrooms" size="xl" type="number" min="0" class="w-full" />
         </UFormField>
         <UFormField label="Bathrooms" name="bathrooms">
-          <UInput v-model.number="form.bathrooms" type="number" min="0" class="w-full" />
+          <UInput v-model.number="form.bathrooms" size="xl" type="number" min="0" class="w-full" />
         </UFormField>
       </div>
       <UFormField label="Address" name="address">
-        <UInput v-model="form.address" class="w-full" />
+        <UInput v-model="form.address" size="xl" class="w-full" />
       </UFormField>
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <UFormField label="Country" name="countryId">
           <USelect
             v-model="form.countryId"
+            size="xl"
             :items="countries.map((c) => ({ label: c.name, value: c.id }))"
             placeholder="Select country"
             class="w-full"
@@ -191,6 +192,7 @@ async function onSubmit() {
         <UFormField label="State" name="stateId">
           <USelect
             v-model="form.stateId"
+            size="xl"
             :items="states.map((s) => ({ label: s.name, value: s.id }))"
             placeholder="Select state"
             class="w-full"
@@ -199,6 +201,7 @@ async function onSubmit() {
         <UFormField label="City" name="cityId">
           <USelect
             v-model="form.cityId"
+            size="xl"
             :items="cities.map((c) => ({ label: c.name, value: c.id }))"
             placeholder="Select city"
             class="w-full"
@@ -224,8 +227,8 @@ async function onSubmit() {
         />
       </UFormField>
       <div class="flex gap-3 pt-2">
-        <UButton type="submit" color="primary" :label="propertyId ? 'Update property' : 'Create property'" icon="i-lucide-save" :loading="loading" />
-        <UButton to="/admin/properties" color="neutral" variant="outline" label="Cancel" />
+        <UButton type="submit" size="xl" color="primary" :label="propertyId ? 'Update property' : 'Create property'" icon="i-lucide-save" :loading="loading" />
+        <UButton to="/admin/properties" size="xl" color="neutral" variant="outline" label="Cancel" />
       </div>
     </UForm>
   </div>

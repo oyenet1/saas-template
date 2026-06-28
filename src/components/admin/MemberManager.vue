@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import { adminRequest, mapFieldErrors } from '../../lib/admin-api'
 import { useTenant } from '../../composables/useTenant'
+import { useConfirm } from '../../composables/useConfirm'
+import ConfirmDialog from '../../components/ConfirmDialog.vue'
+
+const confirm = useConfirm()
 
 interface MemberRow {
   id: number
@@ -62,7 +66,9 @@ async function invite() {
 }
 
 async function remove(userId: string) {
-  if (!activeCompany.value || !confirm('Remove this member?')) return
+  if (!activeCompany.value) return
+  const ok = await confirm.confirm('Remove this member?')
+  if (!ok) return
   const res = await adminRequest(`/companies/${activeCompany.value.id}/members/${userId}`, { method: 'DELETE' })
   if (!res.success) {
     toast.add({ title: 'Remove failed', description: res.message, color: 'error' })
@@ -77,7 +83,7 @@ onMounted(load)
 <template>
   <div>
     <div class="flex justify-end mb-6">
-      <UButton color="primary" icon="i-lucide-user-plus" label="Add member" @click="showForm = true" />
+      <UButton size="xl" color="primary" icon="i-lucide-user-plus" label="Add member" @click="showForm = true" />
     </div>
     <div v-if="loading" class="flex justify-center py-12">
       <UIcon name="i-lucide-loader-circle" class="size-8 animate-spin text-primary" />
@@ -90,7 +96,7 @@ onMounted(load)
         </div>
         <UButton
           v-if="row.role !== 'owner'"
-          size="xs"
+          size="xl"
           variant="ghost"
           color="error"
           icon="i-lucide-user-minus"
@@ -98,18 +104,19 @@ onMounted(load)
         />
       </div>
     </div>
+    <ConfirmDialog :confirm="confirm" />
     <UModal v-model:open="showForm">
       <template #content>
         <div class="p-6 max-w-md w-full">
           <h3 class="font-semibold mb-4">Invite staff member</h3>
           <UForm :state="form" class="space-y-4" @submit="invite">
             <UFormField label="User ID" name="userId" :error="fieldErrors.userId" hint="Better Auth user id" required>
-              <UInput v-model="form.userId" class="w-full" />
+              <UInput v-model="form.userId" size="xl" class="w-full" />
             </UFormField>
             <UFormField label="Role" name="role">
-              <USelect v-model="form.role" :items="roleOptions" class="w-full" />
+              <USelect v-model="form.role" size="xl" :items="roleOptions" class="w-full" />
             </UFormField>
-            <UButton type="submit" color="primary" label="Add member" :loading="saving" block />
+            <UButton type="submit" size="xl" color="primary" label="Add member" :loading="saving" block />
           </UForm>
         </div>
       </template>

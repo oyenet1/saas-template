@@ -4,6 +4,7 @@ const loading = ref(false)
 const submitted = ref(false)
 const errorMessage = ref<string | null>(null)
 const fieldErrors = reactive<{ email?: string; code?: string; password?: string }>({})
+const showPassword = ref(false)
 const toast = useToast()
 
 onMounted(() => {
@@ -58,6 +59,7 @@ async function handleSubmit() {
       <UFormField label="Email" name="email" :error="fieldErrors.email" required>
         <UInput
           v-model="form.email"
+          size="xl"
           type="email"
           placeholder="you@example.com"
           autocomplete="email"
@@ -67,6 +69,7 @@ async function handleSubmit() {
       <UFormField label="Reset Code" name="code" :error="fieldErrors.code" required>
         <UInput
           v-model="form.code"
+          size="xl"
           inputmode="numeric"
           placeholder="6-digit code"
           class="w-full"
@@ -81,23 +84,30 @@ async function handleSubmit() {
       >
         <UInput
           v-model="form.password"
-          type="password"
+          size="xl"
+          :type="showPassword ? 'text' : 'password'"
           placeholder="Choose a strong password"
           autocomplete="new-password"
           class="w-full"
-        />
+        >
+          <template #trailing>
+            <button type="button" tabindex="-1" @click="showPassword = !showPassword" aria-label="Toggle password visibility">
+              <UIcon :name="showPassword ? 'i-lucide-eye-off' : 'i-lucide-eye'" class="w-4 h-4 text-muted" />
+            </button>
+          </template>
+        </UInput>
       </UFormField>
 
       <div v-if="errorMessage" class="text-sm text-error">{{ errorMessage }}</div>
 
       <UButton
         type="submit"
+        size="xl"
         :loading="loading"
         :disabled="loading"
         label="Update Password"
         icon="i-lucide-key-round"
         color="primary"
-        size="lg"
         block
       />
     </UForm>
@@ -112,12 +122,13 @@ async function handleSubmit() {
     <p class="text-muted mt-2 max-w-md mx-auto">
       You can now sign in with the new password.
     </p>
-    <UButton
-      class="mt-6"
-      color="primary"
-      to="/login"
-      label="Sign In"
-      icon="i-lucide-log-in"
-    />
+      <UButton
+        class="mt-6"
+        size="xl"
+        color="primary"
+        to="/login"
+        label="Sign In"
+        icon="i-lucide-log-in"
+      />
   </div>
 </template>

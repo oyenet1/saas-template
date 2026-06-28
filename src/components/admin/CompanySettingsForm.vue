@@ -52,15 +52,15 @@ async function onSubmit() {
   <div class="surface-card p-6 max-w-xl">
     <UForm :state="form" class="space-y-4" @submit="onSubmit">
       <UFormField label="Company name" name="name" :error="fieldErrors.name" required>
-        <UInput v-model="form.name" class="w-full" />
+        <UInput v-model="form.name" size="xl" class="w-full" />
       </UFormField>
       <UFormField label="Slug" name="slug" :error="fieldErrors.slug" required>
-        <UInput v-model="form.slug" class="w-full" />
+        <UInput v-model="form.slug" size="xl" class="w-full" />
       </UFormField>
       <UFormField label="Plan" name="plan">
-        <USelect v-model="form.plan" :items="planOptions" class="w-full" />
+        <USelect v-model="form.plan" size="xl" :items="planOptions" class="w-full" />
       </UFormField>
-      <UButton type="submit" color="primary" label="Save company" icon="i-lucide-save" :loading="loading" />
+      <UButton type="submit" size="xl" color="primary" label="Save company" icon="i-lucide-save" :loading="loading" />
     </UForm>
   </div>
 </template>

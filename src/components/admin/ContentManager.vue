@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { adminRequest, mapFieldErrors } from '../../lib/admin-api'
 import { useTenant } from '../../composables/useTenant'
+import { useConfirm } from '../../composables/useConfirm'
+import ConfirmDialog from '../../components/ConfirmDialog.vue'
 
 const props = defineProps<{
   resource: string
@@ -17,6 +19,7 @@ const props = defineProps<{
 }>()
 
 const { bootstrap } = useTenant()
+const confirm = useConfirm()
 const loading = ref(true)
 const saving = ref(false)
 const rows = ref<Record<string, unknown>[]>([])
@@ -80,7 +83,8 @@ async function save() {
 }
 
 async function remove(id: number) {
-  if (!confirm('Delete this item?')) return
+  const ok = await confirm.confirm('Delete this item?')
+  if (!ok) return
   const res = await adminRequest(`${apiBase.value}/${id}`, { method: 'DELETE' })
   if (!res.success) {
     toast.add({ title: 'Delete failed', description: res.message, color: 'error' })
@@ -101,7 +105,7 @@ onMounted(load)
   <div>
     <div class="flex items-center justify-between mb-6">
       <p class="text-sm text-muted">{{ rows.length }} item(s)</p>
-      <UButton color="primary" icon="i-lucide-plus" :label="`Add ${title.toLowerCase().replace(/s$/, '')}`" @click="openCreate" />
+      <UButton size="xl" color="primary" icon="i-lucide-plus" :label="`Add ${title.toLowerCase().replace(/s$/, '')}`" @click="openCreate" />
     </div>
 
     <div v-if="loading" class="flex justify-center py-12">
@@ -115,12 +119,13 @@ onMounted(load)
           <p v-if="row.isActive !== undefined" class="text-xs text-muted">{{ row.isActive ? 'Active' : 'Inactive' }}</p>
         </div>
         <div class="flex gap-1">
-          <UButton size="xs" variant="ghost" icon="i-lucide-pencil" @click="openEdit(row)" />
-          <UButton size="xs" variant="ghost" color="error" icon="i-lucide-trash-2" @click="remove(row.id as number)" />
+          <UButton size="xl" variant="ghost" icon="i-lucide-pencil" @click="openEdit(row)" />
+          <UButton size="xl" variant="ghost" color="error" icon="i-lucide-trash-2" @click="remove(row.id as number)" />
         </div>
       </div>
     </div>
 
+    <ConfirmDialog :confirm="confirm" />
     <UModal v-model:open="showForm">
       <template #content>
         <div class="p-6 max-w-lg w-full">
@@ -134,15 +139,15 @@ onMounted(load)
               :error="fieldErrors[field.key]"
               :required="field.required"
             >
-              <UInput v-if="field.type === 'text' || field.type === 'url'" v-model="form[field.key]" :type="field.type === 'url' ? 'url' : 'text'" class="w-full" />
-              <UTextarea v-else-if="field.type === 'textarea'" v-model="form[field.key]" :rows="4" class="w-full" />
-              <UInput v-else-if="field.type === 'number'" v-model.number="form[field.key]" type="number" class="w-full" />
+              <UInput v-if="field.type === 'text' || field.type === 'url'" v-model="form[field.key]" size="xl" :type="field.type === 'url' ? 'url' : 'text'" class="w-full" />
+              <UTextarea v-else-if="field.type === 'textarea'" v-model="form[field.key]" size="xl" :rows="4" class="w-full" />
+              <UInput v-else-if="field.type === 'number'" v-model.number="form[field.key]" size="xl" type="number" class="w-full" />
               <USwitch v-else-if="field.type === 'boolean'" v-model="form[field.key]" />
-              <USelect v-else-if="field.type === 'select'" v-model="form[field.key]" :items="field.options ?? []" class="w-full" />
+              <USelect v-else-if="field.type === 'select'" v-model="form[field.key]" size="xl" :items="field.options ?? []" class="w-full" />
             </UFormField>
             <div class="flex gap-2 pt-2">
-              <UButton type="submit" color="primary" label="Save" :loading="saving" />
-              <UButton color="neutral" variant="outline" label="Cancel" @click="showForm = false" />
+              <UButton type="submit" size="xl" color="primary" label="Save" :loading="saving" />
+              <UButton size="xl" color="neutral" variant="outline" label="Cancel" @click="showForm = false" />
             </div>
           </UForm>
         </div>

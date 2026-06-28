@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import { adminRequest, mapFieldErrors } from '../../lib/admin-api'
 import { useTenant } from '../../composables/useTenant'
+import { useConfirm } from '../../composables/useConfirm'
+import ConfirmDialog from '../../components/ConfirmDialog.vue'
+
+const confirm = useConfirm()
 
 interface CategoryRow {
   id: number
@@ -56,7 +60,8 @@ async function save() {
 }
 
 async function remove(id: number) {
-  if (!confirm('Delete this category?')) return
+  const ok = await confirm.confirm('Delete this category?')
+  if (!ok) return
   const res = await adminRequest(`/api/v1/categories/${id}`, { method: 'DELETE' })
   if (!res.success) {
     toast.add({ title: 'Delete failed', description: res.message, color: 'error' })
@@ -71,7 +76,7 @@ onMounted(load)
 <template>
   <div>
     <div class="flex justify-end mb-6">
-      <UButton color="primary" icon="i-lucide-plus" label="Add category" @click="openCreate" />
+      <UButton size="xl" color="primary" icon="i-lucide-plus" label="Add category" @click="openCreate" />
     </div>
     <div v-if="loading" class="flex justify-center py-12">
       <UIcon name="i-lucide-loader-circle" class="size-8 animate-spin text-primary" />
@@ -83,28 +88,29 @@ onMounted(load)
           <p class="text-xs text-muted">{{ row.slug }}</p>
         </div>
         <div class="flex gap-1">
-          <UButton size="xs" variant="ghost" icon="i-lucide-pencil" @click="openEdit(row)" />
-          <UButton size="xs" variant="ghost" color="error" icon="i-lucide-trash-2" @click="remove(row.id)" />
+          <UButton size="xl" variant="ghost" icon="i-lucide-pencil" @click="openEdit(row)" />
+          <UButton size="xl" variant="ghost" color="error" icon="i-lucide-trash-2" @click="remove(row.id)" />
         </div>
       </div>
     </div>
+    <ConfirmDialog :confirm="confirm" />
     <UModal v-model:open="showForm">
       <template #content>
         <div class="p-6 max-w-md w-full">
           <UForm :state="form" class="space-y-4" @submit="save">
             <UFormField label="Name" name="name" :error="fieldErrors.name" required>
-              <UInput v-model="form.name" class="w-full" />
+              <UInput v-model="form.name" size="xl" class="w-full" />
             </UFormField>
             <UFormField label="Slug" name="slug" :error="fieldErrors.slug">
-              <UInput v-model="form.slug" class="w-full" />
+              <UInput v-model="form.slug" size="xl" class="w-full" />
             </UFormField>
             <UFormField label="Description" name="description">
-              <UTextarea v-model="form.description" class="w-full" />
+              <UTextarea v-model="form.description" size="xl" class="w-full" />
             </UFormField>
             <UFormField label="Featured" name="isFeatured">
               <USwitch v-model="form.isFeatured" />
             </UFormField>
-            <UButton type="submit" color="primary" label="Save" :loading="saving" block />
+            <UButton type="submit" size="xl" color="primary" label="Save" :loading="saving" block />
           </UForm>
         </div>
       </template>

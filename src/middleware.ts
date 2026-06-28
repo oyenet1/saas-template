@@ -2,7 +2,7 @@ import { defineMiddleware } from 'astro:middleware'
 import { getSessionUser } from './lib/auth-client'
 
 const PROTECTED_PREFIXES = ['/admin', '/dashboard'] as const
-const GUEST_ONLY_PREFIXES = ['/login', '/register'] as const
+const GUEST_ONLY_PREFIXES = ['/login'] as const
 
 function matchesPrefix(pathname: string, prefixes: readonly string[]): boolean {
   return prefixes.some((prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`))
@@ -19,8 +19,12 @@ export const onRequest = defineMiddleware(async (context, next) => {
     return context.redirect(`/login?next=${nextPath}`)
   }
 
+  if (pathname === '/register' || pathname.startsWith('/register/')) {
+    return context.redirect('/login')
+  }
+
   if (user && matchesPrefix(pathname, GUEST_ONLY_PREFIXES)) {
-    return context.redirect(pathname === '/register' ? '/dashboard' : '/admin')
+    return context.redirect('/admin')
   }
 
   return next()

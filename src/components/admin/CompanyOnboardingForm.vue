@@ -39,12 +39,12 @@ async function onSubmit() {
     </p>
     <UForm :state="form" class="space-y-4" @submit="onSubmit">
       <UFormField label="Company name" name="name" :error="fieldErrors.name" required>
-        <UInput v-model="form.name" placeholder="Acme Realty" class="w-full" />
+        <UInput v-model="form.name" size="xl" placeholder="Acme Realty" class="w-full" />
       </UFormField>
       <UFormField label="URL slug" name="slug" :error="fieldErrors.slug" hint="Optional — used for your subdomain">
-        <UInput v-model="form.slug" placeholder="acme-realty" class="w-full" />
+        <UInput v-model="form.slug" size="xl" placeholder="acme-realty" class="w-full" />
       </UFormField>
-      <UButton type="submit" color="primary" label="Create company" icon="i-lucide-building-2" :loading="loading" block />
+      <UButton type="submit" size="xl" color="primary" label="Create company" icon="i-lucide-building-2" :loading="loading" block />
     </UForm>
   </div>
 </template>

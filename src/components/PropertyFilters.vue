@@ -69,6 +69,7 @@ async function onSubmit() {
       <UInput
         v-model="form.search"
         name="search"
+        size="xl"
         placeholder="City, location, keyword..."
         icon="i-lucide-search"
         class="w-full"
@@ -78,6 +79,7 @@ async function onSubmit() {
     <UFormField label="Property Type" name="type">
       <USelect
         v-model="form.type"
+        size="xl"
         :items="typeOptions"
         value-key="value"
         class="w-full"
@@ -87,6 +89,7 @@ async function onSubmit() {
     <UFormField label="Listing Type" name="status">
       <USelect
         v-model="form.status"
+        size="xl"
         :items="statusOptions"
         value-key="value"
         class="w-full"
@@ -96,6 +99,7 @@ async function onSubmit() {
     <UFormField label="City" name="city">
       <USelect
         v-model="form.city"
+        size="xl"
         :items="cityOptions"
         value-key="value"
         class="w-full"
@@ -105,6 +109,7 @@ async function onSubmit() {
     <UFormField label="Min Bedrooms" name="minBedrooms">
       <USelect
         v-model="form.minBedrooms"
+        size="xl"
         :items="bedroomOptions"
         value-key="value"
         class="w-full"
@@ -113,6 +118,7 @@ async function onSubmit() {
 
     <UButton
       type="submit"
+      size="xl"
       color="primary"
       label="Apply Filters"
       icon="i-lucide-sliders-horizontal"
@@ -122,6 +128,7 @@ async function onSubmit() {
 
     <UButton
       to="/properties"
+      size="xl"
       color="neutral"
       variant="outline"
       label="Clear All"

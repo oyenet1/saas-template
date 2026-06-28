@@ -1,7 +1,7 @@
 ---
 import '../styles/global.css';
-import Navbar from './Navbar.astro';
-import Footer from './Footer.astro';
+import AuthNavbar from './AuthNavbar.astro';
+import AuthFooter from './AuthFooter.astro';
 import ExternalApiNotice from '../components/ExternalApiNotice.vue';
 
 export interface Props {
@@ -30,8 +30,13 @@ const sidebarLinks: SidebarLink[] = [
   { href: '/admin/content/team', label: 'Team', icon: 'i-lucide-users', section: 'Content' },
   { href: '/admin/content/testimonies', label: 'Testimonials', icon: 'i-lucide-message-square-quote', section: 'Content' },
   { href: '/admin/content/services', label: 'Services', icon: 'i-lucide-briefcase', section: 'Content' },
+  { href: '/admin/users', label: 'Users', icon: 'i-lucide-users', section: 'Company' },
   { href: '/admin/members', label: 'Staff', icon: 'i-lucide-user-cog', section: 'Company' },
   { href: '/admin/company', label: 'Company Settings', icon: 'i-lucide-settings', section: 'Company' },
+  { href: '/admin/newsletters', label: 'Newsletters', icon: 'i-lucide-mail-plus', section: 'Leads' },
+  { href: '/admin/media', label: 'Media Library', icon: 'i-lucide-image-plus', section: 'Content' },
+  { href: '/admin/roles', label: 'Roles & Permissions', icon: 'i-lucide-shield', section: 'Company' },
+  { href: '/admin/domains', label: 'Custom Domains', icon: 'i-lucide-globe', section: 'Company' },
 ];
 
 const currentPath = Astro.url.pathname;
@@ -66,7 +71,7 @@ const sections = [...new Set(sidebarLinks.map((l) => l.section ?? 'Main'))];
     </script>
   </head>
   <body class="isolate bg-[var(--surface-muted)] text-default">
-    <Navbar />
+    <AuthNavbar />
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <div class="flex gap-8">
         <aside class="hidden lg:block w-64 shrink-0">
@@ -115,6 +120,6 @@ const sections = [...new Set(sidebarLinks.map((l) => l.section ?? 'Main'))];
         </main>
       </div>
     </div>
-    <Footer />
+    <AuthFooter />
   </body>
 </html>

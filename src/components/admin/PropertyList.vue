@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import { adminRequest } from '../../lib/admin-api'
 import { useTenant } from '../../composables/useTenant'
+import { useConfirm } from '../../composables/useConfirm'
+import ConfirmDialog from '../../components/ConfirmDialog.vue'
+
+const confirm = useConfirm()
 
 interface PropertyRow {
   id: number
@@ -26,7 +30,8 @@ async function load() {
 }
 
 async function remove(id: number) {
-  if (!confirm('Delete this property?')) return
+  const ok = await confirm.confirm('Delete this property?')
+  if (!ok) return
   const res = await adminRequest(`/api/v1/admin/properties/${id}`, { method: 'DELETE' })
   if (!res.success) {
     toast.add({ title: 'Delete failed', description: res.message, color: 'error' })
@@ -84,5 +89,6 @@ const columns = [
         </tbody>
       </table>
     </div>
+    <ConfirmDialog :confirm="confirm" />
   </div>
 </template>

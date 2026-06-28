@@ -7,6 +7,7 @@ const form = reactive({ email: '', password: '' })
 const loading = ref(false)
 const errorMessage = ref<string | null>(null)
 const fieldErrors = reactive<{ email?: string; password?: string }>({})
+const showPassword = ref(false)
 const toast = useToast()
 
 // Pre-fill the form when a dev `email` query param is supplied so
@@ -60,6 +61,7 @@ async function handleSubmit() {
     <UFormField label="Email" name="email" :error="fieldErrors.email" required>
       <UInput
         v-model="form.email"
+        size="xl"
         type="email"
         placeholder="you@example.com"
         autocomplete="email"
@@ -70,31 +72,38 @@ async function handleSubmit() {
     <UFormField label="Password" name="password" :error="fieldErrors.password" required>
       <UInput
         v-model="form.password"
-        type="password"
+        size="xl"
+        :type="showPassword ? 'text' : 'password'"
         placeholder="Your password"
         autocomplete="current-password"
         class="w-full"
-      />
+      >
+        <template #trailing>
+          <button type="button" tabindex="-1" @click="showPassword = !showPassword" aria-label="Toggle password visibility">
+            <UIcon :name="showPassword ? 'i-lucide-eye-off' : 'i-lucide-eye'" class="w-4 h-4 text-muted" />
+          </button>
+        </template>
+      </UInput>
     </UFormField>
 
     <div v-if="errorMessage" class="text-sm text-error">
       {{ errorMessage }}
     </div>
 
-    <UButton
-      type="submit"
-      :loading="loading"
-      :disabled="loading"
-      label="Sign In"
-      icon="i-lucide-log-in"
-      color="primary"
-      size="lg"
-      block
-    />
+      <UButton
+        type="submit"
+        size="xl"
+        :loading="loading"
+        :disabled="loading"
+        label="Sign In"
+        icon="i-lucide-log-in"
+        color="primary"
+        block
+      />
 
     <div class="flex items-center justify-between text-sm">
       <a href="/forgot-password" class="text-muted hover:text-primary">Forgot password?</a>
-      <a href="/register" class="text-muted hover:text-primary">Create an account</a>
+      <a href="/admin" class="text-muted hover:text-primary">Admin panel</a>
     </div>
   </UForm>
 </template>

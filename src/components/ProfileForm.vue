@@ -42,26 +42,27 @@ function onCancel() {
           <div>
             <p class="font-medium">Alexander Voss</p>
             <p class="text-xs text-muted">Member since March 2025</p>
-            <UButton to="#" variant="link" color="primary" size="xs" label="Change photo" class="mt-1 p-0" />
+            <UButton to="#" variant="link" color="primary" size="xl" label="Change photo" class="mt-1 p-0" />
           </div>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <UFormField label="First Name" name="firstName">
-            <UInput v-model="form.firstName" size="lg" class="w-full" />
+            <UInput v-model="form.firstName" size="xl" class="w-full" />
           </UFormField>
           <UFormField label="Last Name" name="lastName">
-            <UInput v-model="form.lastName" size="lg" class="w-full" />
+            <UInput v-model="form.lastName" size="xl" class="w-full" />
           </UFormField>
         </div>
         <UFormField label="Email" name="email">
-          <UInput v-model="form.email" type="email" size="lg" class="w-full" />
+          <UInput v-model="form.email" type="email" size="xl" class="w-full" />
         </UFormField>
         <UFormField label="Phone" name="phone">
-          <UInput v-model="form.phone" type="tel" size="lg" class="w-full" />
+          <UInput v-model="form.phone" type="tel" size="xl" class="w-full" />
         </UFormField>
         <div class="flex gap-3 pt-2">
           <UButton
             type="submit"
+            size="xl"
             color="primary"
             label="Save Changes"
             icon="i-lucide-save"
@@ -70,6 +71,7 @@ function onCancel() {
           />
           <UButton
             type="button"
+            size="xl"
             color="neutral"
             variant="outline"
             label="Cancel"

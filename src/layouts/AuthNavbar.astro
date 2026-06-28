@@ -1,0 +1,41 @@
+---
+import DarkModeToggle from '../components/DarkModeToggle.vue';
+
+const user = Astro.locals.user as { name?: string | null; email?: string | null } | undefined;
+---
+
+<nav class="sticky top-0 z-50 border-b border-[var(--surface-border)] bg-white/90 dark:bg-[var(--surface-page)]/90 backdrop-blur-xl shadow-[var(--shadow-nav)]">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-[4.25rem]">
+      <a href="/" class="flex items-center gap-2.5 shrink-0 group" aria-label="Top Villa Luxury Homes — Home">
+        <img src="/tvlh-logo.png" alt="Top Villa Luxury Homes" class="h-12 sm:h-14 w-auto transition-transform group-hover:scale-[1.02]" />
+      </a>
+
+      <div class="hidden md:flex items-center gap-3">
+        <a href="/" class="text-sm text-muted hover:text-default transition-colors">
+          View Site
+        </a>
+        <span class="w-px h-4 bg-[var(--surface-border)]" />
+        <DarkModeToggle client:only="vue" />
+        <span class="w-px h-4 bg-[var(--surface-border)]" />
+        <UserDropdown client:load email={user?.email} name={user?.name} />
+      </div>
+
+      <div class="flex items-center gap-2 md:hidden">
+        <DarkModeToggle client:only="vue" />
+        <button
+          type="button"
+          class="p-2.5 rounded-xl text-muted hover:text-default hover:bg-[var(--surface-muted)] transition-colors"
+          aria-label="Toggle menu"
+          onclick="document.getElementById('mobile-menu')?.classList.toggle('hidden')"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div id="mobile-menu" class="hidden md:hidden border-t border-[var(--surface-border)] pb-4 pt-2 space-y-1">
+      <a href="/" class="block px-3 py-2.5 rounded-lg text-sm font-medium text-muted hover:text-default hover:bg-[var(--surface-muted)] transition-colors">View Site</a>
+    </div>
+  </div>
+</nav>

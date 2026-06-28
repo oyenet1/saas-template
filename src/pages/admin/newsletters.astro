@@ -1,0 +1,14 @@
+---
+export const prerender = false;
+
+import AdminLayout from '../../layouts/AdminLayout.astro';
+import NewsletterList from '../../components/admin/NewsletterList.vue';
+---
+
+<AdminLayout title="Newsletters — Admin" description="Newsletter subscribers">
+  <div class="mb-8">
+    <h1 class="text-2xl font-bold">Newsletter Subscribers</h1>
+    <p class="text-muted text-sm mt-1">Manage email subscribers and export your list.</p>
+  </div>
+  <NewsletterList client:load />
+</AdminLayout>

@@ -52,6 +52,7 @@ async function handleSubmit() {
       <UFormField label="Email" name="email" :error="fieldErrors.email" required>
         <UInput
           v-model="email"
+          size="xl"
           type="email"
           placeholder="you@example.com"
           autocomplete="email"
@@ -63,12 +64,12 @@ async function handleSubmit() {
 
       <UButton
         type="submit"
+        size="xl"
         :loading="loading"
         :disabled="loading"
         label="Send Reset Code"
         icon="i-lucide-mail"
         color="primary"
-        size="lg"
         block
       />
 
@@ -89,12 +90,13 @@ async function handleSubmit() {
       If an account exists for <span class="font-medium">{{ email }}</span>, a reset code has been sent.
       Enter the code on the next page to choose a new password.
     </p>
-    <UButton
-      class="mt-6"
-      color="primary"
-      :to="`/reset-password?email=${encodeURIComponent(email)}`"
-      label="Enter Reset Code"
-      icon="i-lucide-key-round"
-    />
+      <UButton
+        class="mt-6"
+        size="xl"
+        color="primary"
+        :to="`/reset-password?email=${encodeURIComponent(email)}`"
+        label="Enter Reset Code"
+        icon="i-lucide-key-round"
+      />
   </div>
 </template>

@@ -36,7 +36,7 @@ async function onSubmit() {
         name="search"
         placeholder="Search by city, location, or keyword..."
         icon="i-lucide-search"
-        size="lg"
+        size="xl"
         class="w-full"
       />
     </UFormField>
@@ -45,7 +45,7 @@ async function onSubmit() {
         v-model="type"
         :items="typeOptions"
         value-key="value"
-        size="lg"
+        size="xl"
         class="w-full"
       />
     </UFormField>
@@ -54,14 +54,14 @@ async function onSubmit() {
         v-model="status"
         :items="statusOptions"
         value-key="value"
-        size="lg"
+        size="xl"
         class="w-full"
       />
     </UFormField>
     <UButton
       type="submit"
       color="primary"
-      size="lg"
+      size="xl"
       icon="i-lucide-search"
       label="Search"
       class="shrink-0 justify-center"

@@ -123,6 +123,7 @@
   select,
   textarea,
   button {
+    cursor: pointer;
     accent-color: var(--ui-primary);
     caret-color: var(--ui-primary);
   }

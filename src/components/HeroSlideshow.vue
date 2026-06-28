@@ -7,6 +7,19 @@ const current = ref(0)
 const isPaused = ref(false)
 const total = computed(() => slides.value.length)
 
+const search = ref('')
+const type = ref('')
+const status = ref('')
+
+function onSearch() {
+  const params = new URLSearchParams()
+  if (search.value) params.set('search', search.value)
+  if (type.value) params.set('type', type.value)
+  if (status.value) params.set('status', status.value)
+  const qs = params.toString()
+  window.location.href = '/properties' + (qs ? `?${qs}` : '')
+}
+
 function next() {
   current.value = (current.value + 1) % total.value
 }
@@ -67,32 +80,25 @@ onMounted(() => {
 
       <div class="mt-12 lg:mt-16 surface-card p-5 lg:p-6 shadow-[var(--shadow-card)] backdrop-blur-sm bg-white/95 dark:bg-[var(--surface-elevated)]/95">
         <p class="text-xs font-semibold uppercase tracking-wider text-muted mb-3">Search Listings</p>
-        <form action="/properties" method="GET" class="flex flex-col lg:flex-row gap-3">
-          <div class="flex-1">
-            <input
-              type="text"
-              name="search"
-              placeholder="Search by city, location, or keyword..."
-              class="input-field"
-            />
-          </div>
-          <select name="type" class="input-field lg:max-w-[180px]">
-            <option value="">All Types</option>
-            <option value="villa">Villa</option>
-            <option value="house">House</option>
-            <option value="apartment">Apartment</option>
-            <option value="penthouse">Penthouse</option>
-            <option value="land">Land</option>
-          </select>
-          <select name="status" class="input-field lg:max-w-[160px]">
-            <option value="">Buy & Rent</option>
-            <option value="sale">For Sale</option>
-            <option value="rent">For Rent</option>
-          </select>
-          <button type="submit" class="btn-primary shrink-0 justify-center">
-            Search
-          </button>
-        </form>
+        <UForm :state="{ search, type, status }" class="flex flex-col lg:flex-row gap-3" @submit="onSearch">
+          <UFormField name="search" class="flex-1">
+            <UInput v-model="search" size="xl" placeholder="Search by city, location, or keyword..." class="w-full" />
+          </UFormField>
+          <USelect v-model="type" size="xl" :items="[
+            { label: 'All Types', value: '' },
+            { label: 'Villa', value: 'villa' },
+            { label: 'House', value: 'house' },
+            { label: 'Apartment', value: 'apartment' },
+            { label: 'Penthouse', value: 'penthouse' },
+            { label: 'Land', value: 'land' },
+          ]" class="lg:max-w-[180px]" />
+          <USelect v-model="status" size="xl" :items="[
+            { label: 'Buy & Rent', value: '' },
+            { label: 'For Sale', value: 'sale' },
+            { label: 'For Rent', value: 'rent' },
+          ]" class="lg:max-w-[160px]" />
+          <UButton type="submit" size="xl" label="Search" class="shrink-0 justify-center" />
+        </UForm>
       </div>
     </div>
 
