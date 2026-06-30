@@ -11,5 +11,20 @@
 	"observability": {
 		"enabled": true,
 		"head_sampling_rate": 0.1
+	},
+
+	// Bind the Astro SSR Worker to the marketing/frontend domains.
+	// Public site root + www + bare apex handled here.
+	// API requests for api.* are routed to the top-villa-api Worker via
+	// Cloudflare's DNS (set up once in docs/DEPLOY.md). Custom-hostname
+	// entries take bare hostnames only (no wildcards).
+	"routes": [
+		{ "pattern": "topvillaluxuryhome.com.ng",   "custom_domain": true },
+		{ "pattern": "www.topvillaluxuryhome.com.ng", "custom_domain": true }
+	],
+
+	// Public, non-secret env exposed to the Worker.
+	"vars": {
+		"PUBLIC_API_BASE_URL": "https://api.topvillaluxuryhome.com.ng"
 	}
 }
