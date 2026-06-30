@@ -58,7 +58,7 @@ const href = `/properties/${props.property.slug}`
       </div>
 
       <p class="mt-4 text-xl font-semibold text-primary font-[family-name:var(--font-display)]">
-        {{ formatPrice(property.price, property.status) }}
+        {{ formatPrice(property.price, property.status, property.currency) }}
       </p>
     </div>
   </a>

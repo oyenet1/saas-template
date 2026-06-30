@@ -11,6 +11,8 @@ const stats = [
   { label: 'Favorites', value: '24', change: '5 new listings' },
 ];
 
+const medianLuxuryPrice = 4_800_000;
+
 const recentActivity = [
   { action: 'Saved', property: 'Sunset Villa Malibu', time: '2 hours ago', slug: 'sunset-villa-malibu' },
   { action: 'Inquired', property: 'Manhattan Sky Penthouse', time: 'Yesterday', slug: 'manhattan-sky-penthouse' },
@@ -73,7 +75,7 @@ const savedProperties = properties.slice(0, 4);
             <div class="flex-1 min-w-0">
               <p class="text-sm font-medium group-hover:text-primary transition-colors truncate">{p.title}</p>
               <p class="text-xs text-muted">{p.location}</p>
-              <p class="text-xs font-semibold text-primary mt-0.5">{formatPrice(p.price, p.status)}</p>
+              <p class="text-xs font-semibold text-primary mt-0.5">{formatPrice(p.price, p.status, p.currency)}</p>
             </div>
           </a>
         ))}
@@ -90,7 +92,7 @@ const savedProperties = properties.slice(0, 4);
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
       <div>
         <p class="text-sm text-muted">Median Price (Luxury)</p>
-        <p class="text-xl font-bold mt-1">$4.8M</p>
+        <p class="text-xl font-bold mt-1">{formatPrice(medianLuxuryPrice, 'sale', 'NGN')}</p>
         <p class="text-xs text-success mt-1">&uarr; 3.2% this month</p>
       </div>
       <div>

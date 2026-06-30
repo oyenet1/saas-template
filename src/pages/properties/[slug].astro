@@ -21,7 +21,7 @@ const isDirectVideo = !!property.video && /\.(mp4|webm|mov|m4v|ogg)(\?|#|$)/i.te
 
 <Layout
   title={`${property.title} — LuxEstate`}
-  description={`${property.title} — ${property.bedrooms} bed, ${property.bathrooms} bath, ${property.area.toLocaleString()} sqft in ${property.location}. ${formatPrice(property.price, property.status)}.`}
+  description={`${property.title} — ${property.bedrooms} bed, ${property.bathrooms} bath, ${property.area.toLocaleString()} sqft in ${property.location}. ${formatPrice(property.price, property.status, property.currency)}.`}
 >
   <article class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
     <nav class="flex items-center gap-2 text-sm text-muted mb-6">
@@ -56,7 +56,7 @@ const isDirectVideo = !!property.video && /\.(mp4|webm|mov|m4v|ogg)(\?|#|$)/i.te
           </div>
 
           <p class="text-3xl font-bold text-primary mb-6">
-            {formatPrice(property.price, property.status)}
+            {formatPrice(property.price, property.status, property.currency)}
           </p>
 
           <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 p-5 rounded-xl border border-default bg-elevated/50">

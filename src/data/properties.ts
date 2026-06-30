@@ -4,6 +4,7 @@ export interface Property {
   type: 'house' | 'apartment' | 'villa' | 'penthouse' | 'land'
   status: 'sale' | 'rent'
   price: number
+  currency?: string
   bedrooms: number
   bathrooms: number
   area: number
@@ -277,12 +278,26 @@ export function getPropertyTypes(): string[] {
   return [...new Set(properties.map((p) => p.type))].sort()
 }
 
-export function formatPrice(price: number, status: 'sale' | 'rent'): string {
-  if (status === 'rent') {
-    return `$${price.toLocaleString()}/mo`
-  }
-  if (price >= 1000000) {
-    return `$${(price / 1000000).toFixed(price % 1000000 === 0 ? 0 : 1)}M`
-  }
-  return `$${price.toLocaleString()}`
+const CURRENCY_SYMBOLS: Record<string, string> = {
+  NGN: '₦',
+  USD: '$',
+  EUR: '€',
+  GBP: '£',
+  AED: 'د.إ',
+  AUD: 'A$',
+  CAD: 'C$',
+}
+
+export function formatPrice(
+  price: number,
+  status: 'sale' | 'rent',
+  currency: string = 'NGN',
+): string {
+  const code = (currency || 'NGN').toUpperCase()
+  const symbol = CURRENCY_SYMBOLS[code] ?? code
+  const amount = price.toLocaleString('en-US', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  })
+  return status === 'rent' ? `${symbol}${amount}/mo` : `${symbol}${amount}`
 }
