@@ -2,6 +2,7 @@
 import { adminRequest, mapFieldErrors } from '../../lib/admin-api'
 import { useTenant } from '../../composables/useTenant'
 import { useGeo } from '../../composables/useGeo'
+import PropertyMediaManager from './PropertyMediaManager.vue'
 
 const props = defineProps<{ propertyId?: number }>()
 
@@ -119,10 +120,16 @@ onMounted(async () => {
 async function onSubmit() {
   loading.value = true
   applyErrors(undefined)
-  const body = { ...form }
+  const body = props.propertyId
+    ? {
+        ...form,
+        syncCategories: form.categoryIds,
+        syncFeatures: form.featureIds,
+      }
+    : { ...form }
   const path = props.propertyId ? `/api/v1/admin/properties/${props.propertyId}` : '/api/v1/admin/properties'
   const method = props.propertyId ? 'PATCH' : 'POST'
-  const res = await adminRequest(path, { method, body })
+  const res = await adminRequest<{ property?: { id?: number } }>(path, { method, body })
   loading.value = false
   if (!res.success) {
     applyErrors(res.errors)
@@ -130,7 +137,9 @@ async function onSubmit() {
     return
   }
   toast.add({ title: props.propertyId ? 'Property updated' : 'Property created', color: 'success', icon: 'i-lucide-check-circle-2' })
-  window.location.assign('/admin/properties')
+  if (props.propertyId) return
+  const createdId = res.data?.property?.id
+  window.location.assign(createdId ? `/admin/properties/${createdId}` : '/admin/properties')
 }
 </script>
 
@@ -230,6 +239,7 @@ async function onSubmit() {
         <UButton type="submit" size="xl" color="primary" :label="propertyId ? 'Update property' : 'Create property'" icon="i-lucide-save" :loading="loading" />
         <UButton to="/admin/properties" size="xl" color="neutral" variant="outline" label="Cancel" />
       </div>
+      <PropertyMediaManager v-if="propertyId" :property-id="propertyId" />
     </UForm>
   </div>
 </template>

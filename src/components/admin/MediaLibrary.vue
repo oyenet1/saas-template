@@ -42,8 +42,8 @@ onMounted(load)
     <div class="flex items-center justify-between mb-6">
       <UTabs
         :items="[
-          { label: 'Images', slot: 'images' },
-          { label: 'Videos', slot: 'videos' },
+          { label: 'Images', slot: 'images', value: 'images' },
+          { label: 'Videos', slot: 'videos', value: 'videos' },
         ]"
         v-model="tab"
       />

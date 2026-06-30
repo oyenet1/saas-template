@@ -58,6 +58,17 @@ export interface RequestOptions {
   signal?: AbortSignal
 }
 
+function isBodyInitLike(value: unknown): value is BodyInit {
+  return (
+    value instanceof FormData ||
+    value instanceof Blob ||
+    value instanceof URLSearchParams ||
+    typeof value === 'string' ||
+    value instanceof ArrayBuffer ||
+    ArrayBuffer.isView(value)
+  )
+}
+
 /**
  * Low-level request helper. Returns the parsed envelope. Throws on
  * network errors only — non-2xx responses return `{ success: false, … }`
@@ -70,8 +81,12 @@ export async function request<T = unknown>(path: string, opts: RequestOptions = 
   }
   let body: BodyInit | undefined
   if (opts.body !== undefined) {
-    headers['Content-Type'] = 'application/json'
-    body = JSON.stringify(opts.body)
+    if (isBodyInitLike(opts.body)) {
+      body = opts.body
+    } else {
+      headers['Content-Type'] = 'application/json'
+      body = JSON.stringify(opts.body)
+    }
   }
   if (opts.cookie) headers['Cookie'] = opts.cookie
 

@@ -164,8 +164,44 @@ const FEATURE_MAP: Record<string, string[]> = {
   'london-mayfair-townhouse': ['Garden Square', 'Wine Cellar', 'Gym', 'Period Features'],
 }
 
+function imageUrlsFromApi(value: unknown): string[] {
+  if (!Array.isArray(value)) return []
+  return value
+    .map((item) => {
+      if (typeof item === 'string') return item
+      if (item && typeof item === 'object' && 'url' in item && typeof item.url === 'string') return item.url
+      return null
+    })
+    .filter((url): url is string => !!url)
+}
+
+function featureNamesFromApi(value: unknown): string[] {
+  if (!Array.isArray(value)) return []
+  return value
+    .map((item) => {
+      if (typeof item === 'string') return item
+      if (item && typeof item === 'object' && 'name' in item && typeof item.name === 'string') return item.name
+      return null
+    })
+    .filter((name): name is string => !!name)
+}
+
+function firstVideoUrlFromApi(api: any): string | undefined {
+  if (typeof api.videoUrl === 'string' && api.videoUrl) return api.videoUrl
+  if (typeof api.video === 'string' && api.video) return api.video
+  if (Array.isArray(api.videos)) {
+    const first = api.videos.find((item: unknown) => item && typeof item === 'object' && typeof (item as { url?: unknown }).url === 'string') as
+      | { url: string }
+      | undefined
+    return first?.url
+  }
+  return undefined
+}
+
 function toProperty(api: any): Property {
   const slug = api.slug || ''
+  const imageUrls = imageUrlsFromApi(api.images)
+  const featureNames = featureNamesFromApi(api.features)
   return {
     slug,
     title: api.title || '',
@@ -178,9 +214,9 @@ function toProperty(api: any): Property {
     location: api.address || api.location || '',
     city: api.city || '',
     description: api.description || '',
-    features: FEATURE_MAP[slug] || ['Modern Finishes', 'Natural Light'],
-    images: IMAGE_POOL,
-    video: api.videoUrl || api.video,
+    features: featureNames.length ? featureNames : FEATURE_MAP[slug] || ['Modern Finishes', 'Natural Light'],
+    images: imageUrls.length ? imageUrls : IMAGE_POOL,
+    video: firstVideoUrlFromApi(api),
     featured: FEATURED_SLUGS.includes(slug) || !!api.featured,
   }
 }

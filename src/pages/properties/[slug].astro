@@ -16,6 +16,7 @@ if (!property) {
 
 const allFeatured = await getFeaturedProperties();
 const similar = allFeatured.filter((p: any) => p.slug !== slug).slice(0, 3);
+const isDirectVideo = !!property.video && /\.(mp4|webm|mov|m4v|ogg)(\?|#|$)/i.test(property.video);
 ---
 
 <Layout
@@ -87,13 +88,23 @@ const similar = allFeatured.filter((p: any) => p.slug !== slug).slice(0, 3);
           <div>
             <h2 class="text-xl font-semibold mb-4">Video Tour</h2>
             <div class="aspect-video rounded-xl overflow-hidden border border-default">
-              <iframe
-                src={property.video}
-                title={`${property.title} video tour`}
-                class="w-full h-full"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen
-              />
+              {isDirectVideo ? (
+                <video
+                  src={property.video}
+                  title={`${property.title} video tour`}
+                  class="w-full h-full bg-black"
+                  controls
+                  preload="metadata"
+                />
+              ) : (
+                <iframe
+                  src={property.video}
+                  title={`${property.title} video tour`}
+                  class="w-full h-full"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowfullscreen
+                />
+              )}
             </div>
           </div>
         )}
