@@ -38,7 +38,7 @@ async function save() {
   Object.keys(fieldErrors).forEach((k) => delete fieldErrors[k])
   const res = await adminRequest(`/api/v1/companies/${activeCompany.value?.id}/domains`, {
     method: 'POST',
-    body: form,
+    body: { hostname: form.domain },
   })
   saving.value = false
   if (!res.success) {
@@ -87,10 +87,10 @@ onMounted(load)
         </thead>
         <tbody class="divide-y divide-[var(--surface-border)]">
           <tr v-for="row in rows" :key="String(row.id)" class="hover:bg-[var(--surface-muted)]/50 transition-colors">
-            <td class="px-4 py-3 font-medium">{{ row.domain }}</td>
+            <td class="px-4 py-3 font-medium">{{ row.hostname ?? row.domain }}</td>
             <td class="px-4 py-3">
-              <span :class="[row.verified ? 'text-success' : 'text-warning', 'text-xs font-medium']">
-                {{ row.verified ? 'Verified' : 'Pending' }}
+              <span :class="[(row.verified || row.status === 'verified') ? 'text-success' : 'text-warning', 'text-xs font-medium']">
+                {{ (row.verified || row.status === 'verified') ? 'Verified' : 'Pending' }}
               </span>
             </td>
             <td class="px-4 py-3 text-right">

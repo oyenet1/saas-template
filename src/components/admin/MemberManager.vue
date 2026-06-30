@@ -39,7 +39,7 @@ async function load() {
     return
   }
   const res = await adminRequest<{ members: MemberRow[] }>(
-    `/companies/${activeCompany.value.id}/members?perPage=50`,
+    `/api/v1/companies/${activeCompany.value.id}/members?perPage=50`,
   )
   rows.value = res.data?.members ?? []
   loading.value = false
@@ -49,7 +49,7 @@ async function invite() {
   if (!activeCompany.value) return
   saving.value = true
   Object.keys(fieldErrors).forEach((k) => delete fieldErrors[k])
-  const res = await adminRequest(`/companies/${activeCompany.value.id}/members`, {
+  const res = await adminRequest(`/api/v1/companies/${activeCompany.value.id}/members`, {
     method: 'POST',
     body: { ...form },
   })
@@ -69,7 +69,7 @@ async function remove(userId: string) {
   if (!activeCompany.value) return
   const ok = await confirm.confirm('Remove this member?')
   if (!ok) return
-  const res = await adminRequest(`/companies/${activeCompany.value.id}/members/${userId}`, { method: 'DELETE' })
+  const res = await adminRequest(`/api/v1/companies/${activeCompany.value.id}/members/${userId}`, { method: 'DELETE' })
   if (!res.success) {
     toast.add({ title: 'Remove failed', description: res.message, color: 'error' })
     return

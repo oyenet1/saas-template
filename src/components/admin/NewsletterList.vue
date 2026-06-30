@@ -19,7 +19,7 @@ async function load() {
   await bootstrap()
   const res = await adminRequest<Record<string, unknown>>('/api/v1/leads/newsletters?perPage=200')
   const data = res.data as Record<string, unknown[]> | undefined
-  rows.value = (data?.newsletters as Record<string, unknown>[]) ?? []
+  rows.value = (data?.subscribers as Record<string, unknown>[]) ?? []
   loading.value = false
 }
 
@@ -45,16 +45,18 @@ async function save() {
 }
 
 async function toggleSub(row: Record<string, unknown>) {
-  const subscribed = !row.subscribed
-  const res = await adminRequest(`/api/v1/leads/newsletters/${row.id}`, {
-    method: 'PATCH',
-    body: { subscribed },
+  const subscribed = !Boolean(row.subscribed ?? row.isSubscribed)
+  const endpoint = subscribed ? '/api/v1/leads/newsletters/subscribe' : '/api/v1/leads/newsletters/unsubscribe'
+  const res = await adminRequest(endpoint, {
+    method: 'POST',
+    body: { email: row.email },
   })
   if (!res.success) {
     toast.add({ title: 'Failed', description: res.message, color: 'error' })
     return
   }
   row.subscribed = subscribed
+  row.isSubscribed = subscribed
   toast.add({ title: subscribed ? 'Subscribed' : 'Unsubscribed', color: 'success' })
 }
 
@@ -73,7 +75,8 @@ async function remove(id: number) {
 function exportCsv() {
   const csv = [['Email', 'Subscribed', 'Date'].join(',')]
   for (const row of rows.value) {
-    csv.push([row.email, row.subscribed ? 'Yes' : 'No', row.createdAt as string].join(','))
+    const subscribed = Boolean(row.subscribed ?? row.isSubscribed)
+    csv.push([row.email, subscribed ? 'Yes' : 'No', row.createdAt as string].join(','))
   }
   const blob = new Blob([csv.join('\n')], { type: 'text/csv' })
   const url = URL.createObjectURL(blob)
@@ -115,14 +118,14 @@ onMounted(load)
           <tr v-for="row in rows" :key="String(row.id)" class="hover:bg-[var(--surface-muted)]/50 transition-colors">
             <td class="px-4 py-3 font-medium">{{ row.email }}</td>
             <td class="px-4 py-3">
-              <span :class="[row.subscribed ? 'text-success' : 'text-muted', 'text-xs font-medium']">
-                {{ row.subscribed ? 'Active' : 'Unsubscribed' }}
+              <span :class="[(row.subscribed ?? row.isSubscribed) ? 'text-success' : 'text-muted', 'text-xs font-medium']">
+                {{ (row.subscribed ?? row.isSubscribed) ? 'Active' : 'Unsubscribed' }}
               </span>
             </td>
             <td class="px-4 py-3 text-xs text-muted hidden sm:table-cell">{{ (row.createdAt as string)?.split('T')[0] }}</td>
             <td class="px-4 py-3 text-right">
               <div class="flex gap-1 justify-end">
-                <UButton size="xl" variant="ghost" :label="row.subscribed ? 'Unsubscribe' : 'Subscribe'" @click="toggleSub(row)" />
+                <UButton size="xl" variant="ghost" :label="(row.subscribed ?? row.isSubscribed) ? 'Unsubscribe' : 'Subscribe'" @click="toggleSub(row)" />
                 <UButton size="xl" variant="ghost" color="error" icon="i-lucide-trash-2" @click="remove(row.id as number)" />
               </div>
             </td>

@@ -2,8 +2,12 @@
 
 import type { SessionUser } from './lib/auth-client'
 
-declare namespace App {
-  interface Locals {
-    user: SessionUser | null
+declare global {
+  namespace App {
+    interface Locals {
+      user: SessionUser | null
+    }
   }
 }
+
+export {}

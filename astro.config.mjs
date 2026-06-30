@@ -8,10 +8,10 @@ import node from '@astrojs/node';
 
 // Default to Node adapter so auth middleware and `prerender = false` routes
 // run on-demand in local dev. Use HOSTING=cloudflare for production builds.
-const hosting = process.env.HOSTING || 'node';
+const hosting = process.env.HOSTING === 'cloudflare' ? 'cloudflare' : 'node';
 
 const adapters = {
-  cloudflare: cloudflare({ imageService: true }),
+  cloudflare: cloudflare(),
   node: node({ mode: 'standalone' }),
 };
 
